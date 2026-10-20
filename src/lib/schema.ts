@@ -173,10 +173,26 @@ export const esquema = z
       prazo: opcional,
       incluso: z.array(texto('o {item} está vazio')).default([]),
       direitosDeUso: opcional,
+      observacao: opcional,
+    }),
+
+    valores: secao('Pacotes e valores', {
+      texto: opcional,
       pacotes: z
-        .array(z.strictObject({ nome: texto('faltou o nome do {item}'), descricao: opcional, preco: opcional }))
+        .array(
+          z.strictObject({
+            nome: texto('faltou o nome do {item}'),
+            detalhe: opcional,
+            preco: opcional,
+            descricao: opcional,
+            etiqueta: opcional,
+          }),
+        )
         .default([]),
-      mostrarPrecos: sim(false),
+      avulsos: z
+        .array(z.strictObject({ nome: texto('faltou o nome do {item}'), preco: texto('faltou o preço do {item}') }))
+        .default([]),
+      botao: z.string().trim().default('Quero este pacote'),
       observacao: opcional,
     }),
 
@@ -221,12 +237,12 @@ const SECOES: Record<string, string> = {
   modoExemplo: 'Modo exemplo', endereco: 'Endereço do site', modoDosVideos: 'Modo dos vídeos', urlDosVideos: 'URL dos vídeos',
   tema: 'Tema', cores: 'Cores',
   topo: 'Topo', videos: 'Vídeos', campanha: 'Campanha', nichos: 'Nichos', diferenciais: 'Diferenciais', marcas: 'Marcas',
-  resultados: 'Resultados', comoTrabalho: 'Como trabalho', contato: 'Contato', seo: 'SEO',
+  resultados: 'Resultados', comoTrabalho: 'Como trabalho', valores: 'Valores', contato: 'Contato', seo: 'SEO',
 };
 const ITENS: Record<string, string> = {
   'videos.lista': 'vídeo', 'nichos.lista': 'nicho', 'diferenciais.lista': 'diferencial', 'marcas.lista': 'marca',
   'resultados.numeros': 'número', 'resultados.prints': 'print', 'resultados.depoimentos': 'depoimento',
-  'comoTrabalho.pacotes': 'pacote', 'comoTrabalho.incluso': 'item do "incluso"',
+  'comoTrabalho.incluso': 'item do "incluso"', 'valores.pacotes': 'pacote', 'valores.avulsos': 'item avulso',
 };
 const TIPOS: Record<string, string> = {
   string: 'um texto entre aspas', boolean: 'true ou false, sem aspas', array: 'uma lista entre colchetes [ ]',

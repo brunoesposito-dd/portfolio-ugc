@@ -3,13 +3,12 @@
 import Cabecalho from './Cabecalho.astro';
 import { c } from '../lib/site';
 
-const { numero } = Astro.props as { numero: number };
 const nichos = c.nichos!;
 ---
 
 <section class="secao recuo" id="nichos" aria-labelledby="nichos-titulo">
-  <Cabecalho numero={numero} titulo={nichos.titulo} id="nichos-titulo" />
-  <div class="desloca">
+  <Cabecalho rotulo="Nichos" titulo={nichos.titulo} id="nichos-titulo" />
+  <div>
     {nichos.texto && <p class="texto">{nichos.texto}</p>}
     <ul class="lista">{nichos.lista.map((n) => <li>{n}</li>)}</ul>
   </div>
@@ -30,6 +29,16 @@ const nichos = c.nichos!;
     letter-spacing: var(--espaco-titulo);
     text-transform: var(--caixa-titulo);
     line-height: 1.08;
+  }
+  @media (max-width: 759px) {
+    .texto {
+      margin-inline: auto;
+      text-align: center;
+    }
+    .lista {
+      justify-content: center;
+      text-align: center;
+    }
   }
   .lista li:nth-child(even) {
     font-style: var(--italico);

@@ -59,7 +59,7 @@ Resuma em uma ou duas frases ("Está tudo pronto" ou "Instalei o ffmpeg; feche e
 
 1. Faça a mudança (normalmente só em `src/data/creator.ts`).
 2. Rode `npm run build`. Se der erro, leia a mensagem (ela vem em português e diz o lugar exato), corrija e rode de novo.
-3. Se ela quiser ver antes de publicar: rode `npm run dev` e passe o link `http://localhost:4321`. Fora de um terminal interativo, o Astro já sobe o servidor em segundo plano. Quando terminar, pare com `npx astro dev stop`.
+3. Se ela quiser ver antes de publicar: rode `npm run dev` e passe o link `http://localhost:4321`. Fora de um terminal interativo, o Astro já sobe o servidor em segundo plano. Quando terminar, pare com `npx astro dev stop`. Se o servidor continuar mostrando um erro de vídeo que já foi resolvido (ex.: o arquivo chegou depois em `public/videos`), pare e suba de novo.
 4. `git add -A`, depois `git status` para conferir que não entrou nada estranho (vídeo original, arquivo gigante). Faça o commit com uma mensagem curta em português dizendo o que mudou (ex.: "Troca a bio e adiciona vídeo da Lumi").
 5. `git push`.
 6. Avise: "Pronto! Em 1 a 2 minutos o site atualiza sozinho." A Cloudflare Pages monta e publica o site sozinha a cada push.
@@ -119,7 +119,8 @@ Para voltar de `'r2'` para `'local'`, faça o caminho inverso: coloque os arquiv
 | Desligar a campanha | `campanha.mostrar: false` (os vídeos dela voltam para a grade) |
 | Vídeos parados até tocar | `videos.previaAutomatica: false` |
 | WhatsApp, e-mail, Instagram, TikTok, mídia kit | `contato` (WhatsApp com 55 + DDD + número) |
-| Mostrar preços | `comoTrabalho.mostrarPrecos: true` e `preco` em cada pacote |
+| Pacotes, preços e avulsos | `valores` (`pacotes` com `nome`, `detalhe`, `preco`, `descricao` e `etiqueta` opcional para destacar; `avulsos` com `nome` e `preco`). Preço vazio aparece como "Sob consulta". Nunca invente preço: use só o que ela informar |
+| Esconder os valores | `valores.mostrar: false` |
 | Título e descrição no Google | `seo` |
 | Endereço do site / domínio próprio | `endereco` |
 

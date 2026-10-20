@@ -2,7 +2,6 @@
 // Contato: frase de fechamento e a lista de canais.
 import { c, linkDeContato, telefoneLegivel } from '../lib/site';
 
-const { numero } = Astro.props as { numero: number };
 const { titulo, texto, whatsapp, email, instagram, tiktok, midiaKit } = c.contato;
 const canais = [
   whatsapp && { rede: 'WhatsApp', valor: telefoneLegivel(whatsapp.numero), href: linkDeContato('whatsapp'), fora: true },
@@ -14,7 +13,7 @@ const canais = [
 ---
 
 <section class="secao recuo contato" id="contato" aria-labelledby="contato-titulo">
-  <p class="numero">Nº {String(numero).padStart(2, '0')} · Contato</p>
+  <p class="kicker">Contato</p>
   <h2 id="contato-titulo">{titulo}</h2>
   {texto && <p class="texto">{texto}</p>}
   <ul class="canais">
@@ -33,21 +32,27 @@ const canais = [
 </section>
 
 <style>
-  .numero {
-    padding-top: 0.9rem;
-    border-top: 1px solid var(--texto);
-    font-family: var(--f-titulo);
-    font-style: var(--italico);
-    font-size: 1.05rem;
+  .kicker {
+    color: var(--suave);
   }
   h2 {
-    margin-top: clamp(1.25rem, 4vw, 2.25rem);
+    margin-top: 0.6rem;
     font-size: calc(clamp(2.25rem, 7vw, 4.25rem) * var(--escala));
     line-height: 1;
   }
   .texto {
     max-width: 34rem;
     margin-top: 1.25rem;
+  }
+  @media (max-width: 759px) {
+    .kicker,
+    h2 {
+      text-align: center;
+    }
+    .texto {
+      margin-inline: auto;
+      text-align: center;
+    }
   }
   .canais {
     margin-top: clamp(2rem, 5vw, 3rem);

@@ -42,10 +42,10 @@ export default defineCreator({
 
   // Visual do site. Para comparar, a faixa de demonstração no topo do site tem links para os 4.
   // Opções:
-  //   'revista' → creme, preto e vermelho, ar de revista impressa
+  //   'revista' → creme e preto, ar de revista impressa
   //   'noite'   → escuro com verde-limão
   //   'rosa'    → rosa, ameixa e azul
-  //   'terra'   → verde-sálvia, verde-escuro e terracota
+  //   'terra'   → verde-sálvia, verde-escuro e bronze
   tema: 'revista',
 
   // Opcional: troca as cores do tema. Use o formato '#RRGGBB'.
@@ -211,7 +211,7 @@ export default defineCreator({
   // Cada lista pode ficar vazia [] e aquela parte some.
   resultados: {
     mostrar: true,
-    titulo: 'Resultados',
+    titulo: 'O que os vídeos entregaram',
     numeros: [
       { valor: '1,2 mi', legenda: 'visualizações somadas (número de exemplo)' },
       { valor: '4,8%', legenda: 'taxa média de cliques nos anúncios (número de exemplo)' },
@@ -240,16 +240,42 @@ export default defineCreator({
       'Arquivo sem legenda, se a marca pedir',
     ],
     direitosDeUso: 'Uso orgânico nas redes da marca por 6 meses. Uso em anúncios é combinado à parte, por período.',
-    // Formatos de entrega (pacotes).
-    pacotes: [
-      { nome: 'Vídeo único', descricao: 'Um vídeo de 15 a 45 segundos.', preco: 'R$ 000 (exemplo)' },
-      { nome: 'Pacote com 3 vídeos', descricao: 'Três vídeos com ganchos diferentes para a marca testar.', preco: 'R$ 000 (exemplo)' },
-      { nome: 'Fotos de produto', descricao: 'Cinco fotos verticais com o produto em uso.', preco: 'R$ 000 (exemplo)' },
-    ],
-    // false esconde os preços dos pacotes (o resto continua aparecendo).
-    mostrarPrecos: false,
     // Opcional: uma observação no fim da seção.
-    observacao: 'Cada orçamento é montado para a campanha. Me chame com o produto e o objetivo.',
+    observacao: 'Exclusividade, arquivos brutos e urgência são combinados à parte.',
+  },
+
+  // ── VALORES ────────────────────────────────────────────────────────────────
+  // Pacotes com preço: a marca decide mais rápido quando já sabe quanto custa.
+  // Cada pacote tem um botão que abre o WhatsApp já falando daquele pacote.
+  valores: {
+    mostrar: true,
+    titulo: 'Pacotes e valores',
+    // Opcional: uma frase antes dos pacotes.
+    texto: 'Escolha o pacote que combina com a sua campanha. Valores de exemplo: troque pelos seus.',
+    pacotes: [
+      // nome: o que a marca recebe. detalhe: um complemento curto (opcional).
+      // preco: se ficar vazio, aparece "Sob consulta".
+      // etiqueta (opcional): destaca o pacote, ex.: 'Mais pedido'.
+      { nome: '1 vídeo', detalhe: '+ 2 fotos', preco: 'R$ 400', descricao: 'Para conhecer meu trabalho e testar o formato UGC.' },
+      {
+        nome: '3 vídeos',
+        detalhe: '+ 5 fotos',
+        preco: 'R$ 1.050',
+        descricao: 'Três ganchos diferentes para a marca descobrir qual funciona melhor nos anúncios.',
+        etiqueta: 'Mais pedido',
+      },
+      { nome: '5 vídeos', detalhe: '+ 8 fotos', preco: 'R$ 1.600', descricao: 'Uma sequência pensada para a campanha inteira.' },
+    ],
+    // Opcional: itens vendidos separados.
+    avulsos: [
+      { nome: 'Foto de produto', preco: 'R$ 60' },
+      { nome: 'Variação de gancho ou chamada', preco: 'R$ 80' },
+      { nome: 'Uso em anúncios por mais 3 meses', preco: 'R$ 150' },
+    ],
+    // Texto do botão de cada pacote.
+    botao: 'Quero este pacote',
+    // Opcional: uma observação no fim da seção.
+    observacao: 'Todos os pacotes incluem roteiro, gravação, edição e duas rodadas de ajuste.',
   },
 
   // ── CONTATO ────────────────────────────────────────────────────────────────

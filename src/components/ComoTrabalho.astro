@@ -1,15 +1,14 @@
 ---
-// Como eu trabalho: ficha técnica (prazo, incluso, direitos de uso) e formatos de entrega.
+// Como eu trabalho: ficha técnica com prazo, o que está incluso e direitos de uso.
 import Cabecalho from './Cabecalho.astro';
 import { c } from '../lib/site';
 
-const { numero } = Astro.props as { numero: number };
 const t = c.comoTrabalho!;
 ---
 
 <section class="secao recuo" id="como-trabalho" aria-labelledby="como-trabalho-titulo">
-  <Cabecalho numero={numero} titulo={t.titulo} id="como-trabalho-titulo" />
-  <div class="desloca">
+  <Cabecalho rotulo="Processo" titulo={t.titulo} id="como-trabalho-titulo" />
+  <div>
     {
       (t.prazo || t.incluso.length > 0 || t.direitosDeUso) && (
         <dl class="ficha">
@@ -34,22 +33,6 @@ const t = c.comoTrabalho!;
             </div>
           )}
         </dl>
-      )
-    }
-    {
-      t.pacotes.length > 0 && (
-        <>
-          <h3 class="kicker subtitulo">Formatos de entrega</h3>
-          <ul class="pacotes">
-            {t.pacotes.map((p) => (
-              <li>
-                <h4>{p.nome}</h4>
-                {p.descricao && <p>{p.descricao}</p>}
-                {t.mostrarPrecos && p.preco && <p class="preco">{p.preco}</p>}
-              </li>
-            ))}
-          </ul>
-        </>
       )
     }
     {t.observacao && <p class="observacao">{t.observacao}</p>}
@@ -82,42 +65,6 @@ const t = c.comoTrabalho!;
     left: 0;
     color: var(--destaque);
     font-weight: 600;
-  }
-  .subtitulo {
-    margin: clamp(3rem, 8vw, 4.5rem) 0 1.25rem;
-    font-family: var(--f-corpo);
-    letter-spacing: 0.14em;
-  }
-  .pacotes {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr));
-    gap: 1rem;
-  }
-  .pacotes li {
-    display: grid;
-    align-content: start;
-    gap: 0.5rem;
-    padding: 1.5rem;
-    border-radius: var(--raio);
-    background: var(--superficie);
-  }
-  h4 {
-    margin: 0;
-    font-family: var(--f-titulo);
-    font-weight: var(--peso-titulo);
-    font-size: calc(1.35rem * var(--escala));
-    letter-spacing: var(--espaco-titulo);
-    text-transform: var(--caixa-titulo);
-    line-height: 1.05;
-  }
-  .pacotes p {
-    color: var(--suave);
-  }
-  .pacotes .preco {
-    margin-top: 0.5rem;
-    color: var(--texto);
-    font-weight: 600;
-    font-size: 1.15rem;
   }
   .observacao {
     max-width: 34rem;

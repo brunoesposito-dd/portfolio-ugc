@@ -20,9 +20,9 @@ export type ChaveFonte = keyof typeof FONTES;
 // escala: tamanho dos títulos (fontes largas pedem menos de 1, fontes estreitas mais).
 // letra: largura média de uma letra do título (em "em"), usada para o nome nunca sair da tela.
 export const TEMAS = {
-  // Papel creme, tinta preta e vermelho-tomate. Revista de beleza impressa.
+  // Creme e preto, sem cor de destaque: elegante e neutro, deixa os vídeos aparecerem.
   revista: {
-    fundo: '#F3EEE6', texto: '#191714', destaque: '#C2361B', titulo: 'fraunces', corpo: 'instrumentSans',
+    fundo: '#F4EFE7', texto: '#161412', destaque: '#161412', titulo: 'fraunces', corpo: 'instrumentSans',
     peso: 400, caixa: 'none', espacamento: '-0.02em', raio: '2px', escala: 1, letra: 0.6,
   },
   // Escuro, com verde-limão. Bom para tech, games, fitness.
@@ -35,9 +35,9 @@ export const TEMAS = {
     fundo: '#FBE4EA', texto: '#3A1430', destaque: '#2B45D8', titulo: 'youngSerif', corpo: 'figtree',
     peso: 400, caixa: 'none', espacamento: '-0.02em', raio: '20px', escala: 0.86, letra: 0.66,
   },
-  // Verde-sálvia, verde-floresta e terracota. Casa, bem-estar, comida, natureza.
+  // Verde-sálvia, verde-floresta e bronze. Casa, bem-estar, comida, natureza.
   terra: {
-    fundo: '#E5E8DC', texto: '#1E2B22', destaque: '#A64B2A', titulo: 'instrumentSerif', corpo: 'dmSans',
+    fundo: '#E5E8DC', texto: '#1E2B22', destaque: '#7A5A24', titulo: 'instrumentSerif', corpo: 'dmSans',
     peso: 400, caixa: 'none', espacamento: '-0.01em', raio: '8px', escala: 1.12, letra: 0.46,
   },
 } as const satisfies Record<

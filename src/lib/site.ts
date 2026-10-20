@@ -4,7 +4,7 @@ import { join } from 'node:path';
 import creator from '../data/creator';
 import { esquema, explicar, mensagemPadrao } from './schema';
 import { FONTES, TEMAS, variavelDaFonte, type NomeTema } from './temas';
-import { contraste, montarPaleta } from './cores';
+import { contraste, misturar, montarPaleta } from './cores';
 
 class ProblemasNoConteudo extends Error {
   constructor(problemas: string[], onde = 'em src/data/creator.ts') {
@@ -28,7 +28,8 @@ export function visualDoTema(nome: NomeTema, cores: Partial<Record<'fundo' | 'te
   const { paleta, problemas } = montarPaleta({ fundo: tema.fundo, texto: tema.texto, destaque: tema.destaque, ...cores });
   const escuro = contraste(paleta.fundo, '#000000') < contraste(paleta.fundo, '#FFFFFF');
   // Bloco da campanha: preto por padrão (combina com Black Friday), ou a cor escolhida em campanha.cor.
-  const fundoDaCampanha = c.campanha?.cor ?? (escuro ? '#000000' : '#111111');
+  // Num tema escuro, fica um pouco mais claro que a página para se destacar.
+  const fundoDaCampanha = c.campanha?.cor ?? (escuro ? misturar(paleta.texto, paleta.fundo, 0.1) : '#111111');
   const textoDaCampanha = [paleta.fundo, paleta.texto, '#FFFFFF', '#000000'].find((cor) => contraste(cor, fundoDaCampanha) >= 4.5)!;
   return {
     nome,

@@ -180,6 +180,10 @@ const nomesDosTemas: Record<string, string> = { revista: 'Revista', noite: 'Noit
     outline: 3px solid var(--texto);
     outline-offset: 3px;
   }
+  /* Os links do cabeçalho fixo param a seção logo abaixo dele, sem esconder o título. */
+  [id] {
+    scroll-margin-top: 5rem;
+  }
 
   /* Peças usadas em várias seções */
   .recuo {
@@ -214,12 +218,6 @@ const nomesDosTemas: Record<string, string> = { revista: 'Revista', noite: 'Noit
   }
   .secao {
     padding-block: clamp(4rem, 11vw, 8rem) 0;
-  }
-  /* Alinha o conteúdo com o título da seção no computador. */
-  @media (min-width: 760px) {
-    .desloca {
-      padding-left: 12rem;
-    }
   }
   .pular {
     position: absolute;

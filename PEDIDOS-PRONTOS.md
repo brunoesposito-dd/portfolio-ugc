@@ -57,6 +57,9 @@ Copie um pedido, troque o que está entre [colchetes] e cole no Claude Code. Ele
 15. **Como eu trabalho**
     > Atualiza a seção "Como eu trabalho": prazo de [7 dias úteis], incluso [roteiro, edição e legenda], direitos de uso [6 meses para orgânico].
 
+    **Valores**
+    > Atualiza meus valores: [1 vídeo + 2 fotos por R$ 350], [3 vídeos + 5 fotos por R$ 900, que é o mais pedido] e [5 vídeos + 8 fotos por R$ 1.400]. Avulsos: [foto por R$ 50].
+
 16. **Marcas e resultados reais**
     > Coloca as marcas com quem já trabalhei: [Marca A, Marca B]. E coloca este resultado real: [o vídeo para a Marca A teve 230 mil visualizações].
 

@@ -4,12 +4,11 @@ import { Image } from 'astro:assets';
 import Cabecalho from './Cabecalho.astro';
 import { c } from '../lib/site';
 
-const { numero } = Astro.props as { numero: number };
 const { titulo, numeros, prints, depoimentos } = c.resultados!;
 ---
 
 <section class="secao recuo" id="resultados" aria-labelledby="resultados-titulo">
-  <Cabecalho numero={numero} titulo={titulo} id="resultados-titulo" />
+  <Cabecalho rotulo="Resultados" titulo={titulo} id="resultados-titulo" />
   {
     numeros.length > 0 && (
       <dl class="numeros">
@@ -118,6 +117,7 @@ const { titulo, numeros, prints, depoimentos } = c.resultados!;
     gap: 3rem;
   }
   blockquote p {
+    max-width: 46rem;
     font-family: var(--f-titulo);
     font-style: var(--italico);
     font-size: calc(clamp(1.3rem, 3.5vw, 1.9rem) * var(--escala));
@@ -141,5 +141,27 @@ const { titulo, numeros, prints, depoimentos } = c.resultados!;
   }
   .depoimentos figcaption span {
     font-weight: 400;
+  }
+  @media (max-width: 759px) {
+    .numeros div {
+      align-items: center;
+      text-align: center;
+    }
+    /* Um print fica no meio; dois ou mais ficam lado a lado. */
+    .prints {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      text-align: center;
+    }
+    .prints figure {
+      width: min(46%, 15rem);
+    }
+    .prints figure:only-child {
+      width: min(70%, 15rem);
+    }
+    .depoimentos {
+      text-align: center;
+    }
   }
 </style>

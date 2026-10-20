@@ -4,13 +4,12 @@ import { Image } from 'astro:assets';
 import Cabecalho from './Cabecalho.astro';
 import { c } from '../lib/site';
 
-const { numero } = Astro.props as { numero: number };
 const marcas = c.marcas!;
 ---
 
 <section class="secao recuo" id="marcas" aria-labelledby="marcas-titulo">
-  <Cabecalho numero={numero} titulo={marcas.titulo} id="marcas-titulo" />
-  <ul class="desloca lista">
+  <Cabecalho rotulo="Marcas" titulo={marcas.titulo} id="marcas-titulo" />
+  <ul class="lista">
     {
       marcas.lista.map((m) => (
         <li>{m.logo ? <Image src={m.logo} alt={m.nome} height={48} densities={[1, 2]} /> : m.nome}</li>
@@ -30,6 +29,11 @@ const marcas = c.marcas!;
   }
   li {
     display: inline;
+  }
+  @media (max-width: 759px) {
+    .lista {
+      text-align: center;
+    }
   }
   li:not(:last-child)::after {
     content: ' · ' / '';

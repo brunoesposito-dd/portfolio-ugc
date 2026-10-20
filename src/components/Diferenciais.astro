@@ -3,14 +3,13 @@
 import Cabecalho from './Cabecalho.astro';
 import { c } from '../lib/site';
 
-const { numero } = Astro.props as { numero: number };
 const diferenciais = c.diferenciais!;
 const romanos = ['i', 'ii', 'iii', 'iv', 'v'];
 ---
 
 <section class="secao recuo" id="diferenciais" aria-labelledby="diferenciais-titulo">
-  <Cabecalho numero={numero} titulo={diferenciais.titulo} id="diferenciais-titulo" />
-  <ol class="desloca lista">
+  <Cabecalho rotulo="Diferenciais" titulo={diferenciais.titulo} id="diferenciais-titulo" />
+  <ol class="lista">
     {
       diferenciais.lista.map((d, i) => (
         <li>
@@ -49,9 +48,15 @@ const romanos = ['i', 'ii', 'iii', 'iv', 'v'];
     max-width: 30rem;
     color: var(--suave);
   }
+  @media (max-width: 639px) {
+    li {
+      justify-items: center;
+      text-align: center;
+    }
+  }
   @media (min-width: 640px) {
     .lista {
-      grid-template-columns: repeat(2, minmax(0, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr));
     }
   }
 </style>

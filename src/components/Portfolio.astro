@@ -9,6 +9,7 @@ import Diferenciais from './Diferenciais.astro';
 import Marcas from './Marcas.astro';
 import Resultados from './Resultados.astro';
 import ComoTrabalho from './ComoTrabalho.astro';
+import Valores from './Valores.astro';
 import Contato from './Contato.astro';
 import { c, linkPrincipal, videosDaGrade, type Visual } from '../lib/site';
 
@@ -23,76 +24,124 @@ const tem = (secao: { mostrar: boolean } | undefined, ...listas: unknown[][]) =>
   !!secao?.mostrar && listas.some((lista) => lista.length > 0);
 const t = c.comoTrabalho;
 
+// `link`: aparece no menu do cabeçalho fixo.
 const secoes = [
-  { Componente: Videos, mostrar: tem(c.videos, videosDaGrade) },
-  { Componente: Nichos, mostrar: tem(c.nichos, c.nichos?.lista ?? []) },
-  { Componente: Diferenciais, mostrar: tem(c.diferenciais, c.diferenciais?.lista ?? []) },
-  { Componente: Marcas, mostrar: tem(c.marcas, c.marcas?.lista ?? []) },
+  { Componente: Videos, id: 'videos', link: 'Vídeos', mostrar: tem(c.videos, videosDaGrade) },
+  { Componente: Nichos, id: 'nichos', mostrar: tem(c.nichos, c.nichos?.lista ?? []) },
+  { Componente: Diferenciais, id: 'diferenciais', mostrar: tem(c.diferenciais, c.diferenciais?.lista ?? []) },
+  { Componente: Marcas, id: 'marcas', mostrar: tem(c.marcas, c.marcas?.lista ?? []) },
   {
     Componente: Resultados,
+    id: 'resultados',
+    link: 'Resultados',
     mostrar: tem(c.resultados, c.resultados?.numeros ?? [], c.resultados?.prints ?? [], c.resultados?.depoimentos ?? []),
   },
-  { Componente: ComoTrabalho, mostrar: tem(t, t?.incluso ?? [], t?.pacotes ?? [], t?.prazo ? [t.prazo] : [], t?.direitosDeUso ? [t.direitosDeUso] : []) },
-  { Componente: Contato, mostrar: true },
+  {
+    Componente: ComoTrabalho,
+    id: 'como-trabalho',
+    link: 'Como trabalho',
+    mostrar: tem(t, t?.incluso ?? [], t?.prazo ? [t.prazo] : [], t?.direitosDeUso ? [t.direitosDeUso] : []),
+  },
+  { Componente: Valores, id: 'valores', link: 'Valores', mostrar: tem(c.valores, c.valores?.pacotes ?? [], c.valores?.avulsos ?? []) },
+  { Componente: Contato, id: 'contato', link: 'Contato', mostrar: true },
 ].filter((s) => s.mostrar);
 ---
 
 <Base visual={visual} indexar={indexar}>
-  <Topo />
+  <header class="barra">
+    <div class="recuo conteudo-barra">
+      <a class="nome" href="#">{c.topo.nome}</a>
+      <nav aria-label="Seções do portfólio">
+        <ul>
+          {secoes.filter((s) => s.link).map((s) => (
+            <li>
+              <a href={`#${s.id}`}>{s.link}</a>
+            </li>
+          ))}
+        </ul>
+      </nav>
+      <a class="botao" href={linkPrincipal}>{c.topo.botao.texto}</a>
+    </div>
+  </header>
   <main id="conteudo">
+    <Topo />
     {c.campanha?.mostrar && <Campanha />}
-    {secoes.map(({ Componente }, i) => <Componente numero={i + 1} />)}
+    {secoes.map(({ Componente }) => <Componente />)}
   </main>
   <footer class="recuo rodape">
     <p>© {new Date().getFullYear()} {c.topo.nome}</p>
     {c.modoExemplo && <p>Portfólio de exemplo, com dados fictícios</p>}
   </footer>
-  <a class="botao flutuante" href={linkPrincipal}>{c.topo.botao.texto}</a>
 </Base>
 
 <style>
+  /* Cabeçalho que acompanha a rolagem, com o nome e o botão de contato sempre à mão. */
+  .barra {
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    border-bottom: 1px solid var(--linha);
+    background: var(--fundo);
+  }
+  .conteudo-barra {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    min-height: 3.75rem;
+  }
+  .nome {
+    overflow: hidden;
+    font-family: var(--f-titulo);
+    font-weight: var(--peso-titulo);
+    font-size: calc(1.2rem * var(--escala));
+    letter-spacing: var(--espaco-titulo);
+    text-transform: var(--caixa-titulo);
+    text-decoration: none;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  nav {
+    display: none;
+  }
+  nav ul {
+    display: flex;
+    gap: 1.75rem;
+  }
+  nav a {
+    font-size: 0.9rem;
+    text-decoration: none;
+  }
+  nav a:hover {
+    text-decoration: underline;
+  }
+  .barra .botao {
+    flex-shrink: 0;
+    min-height: 2.5rem;
+    padding: 0.55em 1.1em;
+    font-size: 0.88rem;
+  }
   .rodape {
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
     gap: 0.5rem 2rem;
     margin-top: clamp(4rem, 10vw, 7rem);
-    padding-block: 1.5rem 7rem;
-    border-top: 1px solid var(--texto);
+    padding-block: 1.5rem 2rem;
+    border-top: 1px solid var(--linha);
     font-size: 0.85rem;
+    color: var(--suave);
   }
-  /* Botão de contato que acompanha a rolagem no celular. */
-  .flutuante {
-    position: fixed;
-    right: 1rem;
-    bottom: max(1rem, env(safe-area-inset-bottom));
-    z-index: 5;
-    box-shadow: 0 0.5rem 1.5rem rgb(0 0 0 / 0.25);
-  }
-  @supports (animation-timeline: scroll()) {
-    .flutuante {
-      /* Propriedades separadas de propósito: o minificador junta o atalho "animation" com a
-         timeline num valor que o navegador rejeita. */
-      animation-name: aparecer;
-      animation-fill-mode: both;
-      animation-timing-function: linear;
-      animation-timeline: scroll();
-      animation-range: 0 30vh;
-    }
-    @keyframes aparecer {
-      from {
-        opacity: 0;
-        visibility: hidden;
-        translate: 0 1rem;
-      }
-    }
-  }
-  @media (min-width: 760px) {
-    .flutuante {
-      display: none;
-    }
+  @media (max-width: 759px) {
     .rodape {
-      padding-bottom: 2rem;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+    }
+  }
+  @media (min-width: 900px) {
+    nav {
+      display: block;
     }
   }
 </style>
