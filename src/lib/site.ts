@@ -31,12 +31,22 @@ export function visualDoTema(nome: NomeTema, cores: Partial<Record<'fundo' | 'te
   // Num tema escuro, ganha um pouco da cor de destaque para se separar da página.
   const fundoDaCampanha = c.campanha?.cor ?? (escuro ? misturar(paleta.destaque, paleta.fundo, 0.14) : '#111111');
   const textoDaCampanha = [paleta.fundo, paleta.texto, '#FFFFFF', '#000000'].find((cor) => contraste(cor, fundoDaCampanha) >= 4.5)!;
+  // Texto secundário sobre a cor da campanha: o mais suave que ainda passe em 4,5:1.
+  const suaveDaCampanha =
+    [0.65, 0.75, 0.85, 1].map((peso) => misturar(textoDaCampanha, fundoDaCampanha, peso)).find((cor) => contraste(cor, fundoDaCampanha) >= 4.5) ??
+    textoDaCampanha;
   return {
     nome,
     tema,
     paleta,
     escuro,
-    campanha: { fundo: fundoDaCampanha, texto: textoDaCampanha },
+    campanha: {
+      fundo: fundoDaCampanha,
+      texto: textoDaCampanha,
+      suave: suaveDaCampanha,
+      linha: misturar(textoDaCampanha, fundoDaCampanha, 0.25),
+    },
+    topoNaCampanha: tema.topoNaCampanha && !!c.campanha?.mostrar,
     fontes: {
       titulo: { ...FONTES[tema.titulo], variavel: variavelDaFonte(tema.titulo) },
       corpo: { ...FONTES[tema.corpo], variavel: variavelDaFonte(tema.corpo) },

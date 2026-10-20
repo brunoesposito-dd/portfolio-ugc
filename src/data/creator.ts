@@ -275,6 +275,8 @@ export default defineCreator({
   // Bloco de destaque logo abaixo do topo, com os vídeos marcados com
   // `campanha: 'Black Friday'` (ou o nome que estiver em `nome`).
   // Troque o nome para 'Natal', 'Dia das Mães' etc. Para esconder: mostrar: false.
+  // Enquanto estiver ligada, aparece uma faixa no alto do site; no tema 'revista', o topo
+  // inteiro também fica na cor da campanha (preto, ou a cor escolhida em `cor`).
   campanha: {
     mostrar: true,
     nome: 'Black Friday',

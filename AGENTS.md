@@ -114,7 +114,7 @@ Para voltar de `'r2'` para `'local'`, faça o caminho inverso: coloque os arquiv
 | Trocar o visual | `tema: 'revista' \| 'noite' \| 'rosa' \| 'terra'` ("mais escuro" = `'noite'`) |
 | Mudar uma cor | `cores: { fundo, texto, destaque }`, no formato `'#RRGGBB'`; o build avisa se ficar ilegível |
 | Campanha (Black Friday, Natal, Dia das Mães) | `campanha.nome`, `campanha.chamada`, `campanha.texto`; os vídeos entram com `campanha: '<mesmo nome>'` |
-| Cor do bloco da campanha | `campanha.cor` (padrão: preto; ex.: Natal `'#1F4D36'`) |
+| Cor do bloco da campanha | `campanha.cor` (padrão: preto; ex.: Natal `'#1F4D36'`). No tema `revista`, o cabeçalho e o topo também ficam nessa cor enquanto a campanha estiver ligada |
 | Ver os 4 temas com o conteúdo dela | rode `npm run dev` e passe os links `http://localhost:4321/temas/revista/`, `/temas/noite/`, `/temas/rosa/` e `/temas/terra/` |
 | Desligar a campanha | `campanha.mostrar: false` (os vídeos dela voltam para a grade) |
 | Vídeos parados até tocar | `videos.previaAutomatica: false` |

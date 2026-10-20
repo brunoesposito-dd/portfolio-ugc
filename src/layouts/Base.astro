@@ -11,7 +11,7 @@ interface Props {
   indexar?: boolean;
 }
 const { visual = visualPadrao, indexar = true } = Astro.props;
-const { paleta, tema, fontes, escuro, campanha } = visual;
+const { paleta, tema, fontes, escuro, campanha, topoNaCampanha } = visual;
 
 // Sem endereço configurado (ex.: no computador), usa o endereço de onde a página está sendo vista.
 const base = endereco || Astro.url.origin;
@@ -25,6 +25,8 @@ const variaveis = {
   '--no-destaque': paleta.noDestaque,
   '--campanha-fundo': campanha.fundo,
   '--campanha-texto': campanha.texto,
+  '--campanha-suave': campanha.suave,
+  '--campanha-linha': campanha.linha,
   '--f-titulo': `var(${fontes.titulo.variavel})`,
   '--f-corpo': `var(${fontes.corpo.variavel})`,
   '--peso-titulo': tema.peso,
@@ -59,7 +61,7 @@ const nomesDosTemas: Record<string, string> = { revista: 'Revista', noite: 'Noit
 ---
 
 <!doctype html>
-<html lang="pt-BR" style={estilo}>
+<html lang="pt-BR" style={estilo} class:list={[{ 'topo-na-campanha': topoNaCampanha }]}>
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -67,7 +69,7 @@ const nomesDosTemas: Record<string, string> = { revista: 'Revista', noite: 'Noit
     <meta name="description" content={descricaoDaPagina} />
     {!indexar && <meta name="robots" content="noindex" />}
     <link rel="canonical" href={`${base}/`} />
-    <meta name="theme-color" content={paleta.fundo} />
+    <meta name="theme-color" content={topoNaCampanha ? campanha.fundo : paleta.fundo} />
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
 
@@ -183,6 +185,27 @@ const nomesDosTemas: Record<string, string> = { revista: 'Revista', noite: 'Noit
   /* Os links do cabeçalho fixo param a seção logo abaixo dele, sem esconder o título. */
   [id] {
     scroll-margin-top: 5rem;
+  }
+
+  /* Campanha ligada num tema com topoNaCampanha: cabeçalho e topo trocam para as cores da
+     campanha. Como tudo usa as mesmas variáveis, basta trocá-las aqui. */
+  html.topo-na-campanha .barra,
+  html.topo-na-campanha .topo {
+    --fundo: var(--campanha-fundo);
+    --texto: var(--campanha-texto);
+    --destaque: var(--campanha-texto);
+    --no-destaque: var(--campanha-fundo);
+    --suave: var(--campanha-suave);
+    --linha: var(--campanha-linha);
+    background: var(--fundo);
+    color: var(--texto);
+  }
+  html.topo-na-campanha .topo {
+    padding-bottom: clamp(3rem, 7vw, 5rem);
+  }
+  html.topo-na-campanha .campanha {
+    margin-top: 0;
+    border-top: 1px solid var(--campanha-linha);
   }
 
   /* Peças usadas em várias seções */

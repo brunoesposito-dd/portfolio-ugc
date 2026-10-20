@@ -9,7 +9,8 @@ const letras = Math.max(...c.topo.nome.split(/\s+/).map((p) => p.length), 4);
 const temVideos = !!c.videos?.mostrar && videosDaGrade.length > 0;
 ---
 
-<section class="recuo capa" aria-labelledby="nome" style={`--letras:${letras}`}>
+<section class="topo" aria-labelledby="nome" style={`--letras:${letras}`}>
+<div class="recuo capa">
   <div class="titulo">
     <p class="kicker">Creator UGC · {c.topo.nicho}</p>
     <h1 id="nome">{primeiro}{resto.length > 0 && <em>{resto.join(' ')}</em>}</h1>
@@ -32,6 +33,7 @@ const temVideos = !!c.videos?.mostrar && videosDaGrade.length > 0;
       {temVideos && <a class="ver" href="#videos">Ver vídeos <span aria-hidden="true">↓</span></a>}
     </div>
   </div>
+</div>
 </section>
 
 <style>
