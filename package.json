@@ -10,7 +10,7 @@
     "comprimir": "node scripts/comprimir.mjs"
   },
   "dependencies": {
-    "@fontsource/bricolage-grotesque": "^5.3.0",
+    "@fontsource/bodoni-moda": "^5.3.0",
     "@fontsource/dm-sans": "^5.3.0",
     "@fontsource/dm-serif-display": "^5.3.0",
     "@fontsource/figtree": "^5.3.0",

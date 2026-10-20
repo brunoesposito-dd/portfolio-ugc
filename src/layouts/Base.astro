@@ -1,7 +1,7 @@
 ---
 // Estrutura da página: <head> (SEO, prévia no WhatsApp, fontes) e o estilo base.
 import { Font } from 'astro:assets';
-import { c, visual as visualPadrao, endereco, tituloDaPagina, descricaoDaPagina, linkDeContato, type Visual } from '../lib/site';
+import { c, visual as visualPadrao, endereco, tituloDaPagina, descricaoDaPagina, linkDeContato, nichosDosVideos, type Visual } from '../lib/site';
 import { TEMAS } from '../lib/temas';
 
 interface Props {
@@ -53,7 +53,7 @@ const pessoa = {
   url: `${base}/`,
   image: `${base}/og.png`,
   ...(perfis.length > 0 && { sameAs: perfis }),
-  ...(c.nichos?.lista.length && { knowsAbout: c.nichos.lista }),
+  ...(nichosDosVideos.length > 0 && { knowsAbout: nichosDosVideos }),
 };
 const nomesDosTemas: Record<string, string> = { revista: 'Revista', noite: 'Noite', rosa: 'Rosa', terra: 'Terra' };
 ---
@@ -236,9 +236,10 @@ const nomesDosTemas: Record<string, string> = { revista: 'Revista', noite: 'Noit
     flex-wrap: wrap;
     justify-content: center;
     gap: 0.25rem 1.5rem;
-    padding: 0.55rem 1rem;
-    background: var(--texto);
-    color: var(--fundo);
+    padding: 0.5rem 1rem;
+    border-bottom: 1px solid var(--linha);
+    background: var(--superficie);
+    color: var(--texto);
     font-size: 0.8rem;
     text-align: center;
   }
@@ -257,7 +258,5 @@ const nomesDosTemas: Record<string, string> = { revista: 'Revista', noite: 'Noit
   .faixa-exemplo a[aria-current]::before {
     content: '● ' / '';
   }
-  .faixa-exemplo :focus-visible {
-    outline-color: var(--fundo);
-  }
+
 </style>

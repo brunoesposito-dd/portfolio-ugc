@@ -28,8 +28,8 @@ export function visualDoTema(nome: NomeTema, cores: Partial<Record<'fundo' | 'te
   const { paleta, problemas } = montarPaleta({ fundo: tema.fundo, texto: tema.texto, destaque: tema.destaque, ...cores });
   const escuro = contraste(paleta.fundo, '#000000') < contraste(paleta.fundo, '#FFFFFF');
   // Bloco da campanha: preto por padrão (combina com Black Friday), ou a cor escolhida em campanha.cor.
-  // Num tema escuro, fica um pouco mais claro que a página para se destacar.
-  const fundoDaCampanha = c.campanha?.cor ?? (escuro ? misturar(paleta.texto, paleta.fundo, 0.1) : '#111111');
+  // Num tema escuro, ganha um pouco da cor de destaque para se separar da página.
+  const fundoDaCampanha = c.campanha?.cor ?? (escuro ? misturar(paleta.destaque, paleta.fundo, 0.14) : '#111111');
   const textoDaCampanha = [paleta.fundo, paleta.texto, '#FFFFFF', '#000000'].find((cor) => contraste(cor, fundoDaCampanha) >= 4.5)!;
   return {
     nome,
@@ -86,6 +86,15 @@ const daCampanha = (v: (typeof todosOsVideos)[number]) =>
 export const videosDaCampanha = todosOsVideos.filter(daCampanha);
 export const videosDaGrade = todosOsVideos.filter((v) => !daCampanha(v));
 export type Video = (typeof todosOsVideos)[number];
+/** Nichos dos vídeos, sem repetir, na ordem em que aparecem (ignora maiúsculas e acentos). */
+const nichosUnicos = (videos: Video[]) => {
+  const vistos = new Map<string, string>();
+  for (const v of videos) if (v.nicho && !vistos.has(normalizar(v.nicho))) vistos.set(normalizar(v.nicho), v.nicho);
+  return [...vistos.values()];
+};
+export const nichosDosVideos = nichosUnicos(todosOsVideos);
+export const nichosDaGrade = nichosUnicos(videosDaGrade);
+export const chaveDoNicho = (nicho = '') => normalizar(nicho).replace(/[^a-z0-9]+/g, '-');
 
 const arquivosDosVideos = todosOsVideos.flatMap((v) => [
   { nome: v.arquivo, oQue: `o arquivo do vídeo ${v.numero}` },

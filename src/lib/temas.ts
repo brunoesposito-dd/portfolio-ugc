@@ -7,7 +7,7 @@ export const FONTES = {
   fraunces: { nome: 'Fraunces', pesos: [400, 600], italico: true, generica: 'serif' },
   dmSerif: { nome: 'DM Serif Display', pesos: [400], italico: true, generica: 'serif' },
   youngSerif: { nome: 'Young Serif', pesos: [400], italico: false, generica: 'serif' },
-  bricolage: { nome: 'Bricolage Grotesque', pesos: [700], italico: false, generica: 'sans-serif' },
+  bodoni: { nome: 'Bodoni Moda', pesos: [500], italico: true, generica: 'serif' },
   instrumentSans: { nome: 'Instrument Sans', pesos: [400, 600], italico: false, generica: 'sans-serif' },
   inter: { nome: 'Inter', pesos: [400, 600], italico: false, generica: 'sans-serif' },
   figtree: { nome: 'Figtree', pesos: [400, 600], italico: false, generica: 'sans-serif' },
@@ -25,14 +25,14 @@ export const TEMAS = {
     fundo: '#F4EFE7', texto: '#161412', destaque: '#161412', titulo: 'fraunces', corpo: 'instrumentSans',
     peso: 400, caixa: 'none', espacamento: '-0.02em', raio: '2px', escala: 1, letra: 0.6,
   },
-  // Escuro, com verde-limão. Bom para tech, games, fitness.
+  // Quase preto com rosa-blush e serifa de revista de moda. Beleza de luxo, moda, noite.
   noite: {
-    fundo: '#121114', texto: '#F2EFEA', destaque: '#C8F542', titulo: 'bricolage', corpo: 'inter',
-    peso: 700, caixa: 'uppercase', espacamento: '-0.03em', raio: '0px', escala: 0.8, letra: 0.76,
+    fundo: '#141113', texto: '#F5EDE8', destaque: '#F1B5C1', titulo: 'bodoni', corpo: 'inter',
+    peso: 500, caixa: 'none', espacamento: '-0.015em', raio: '6px', escala: 1, letra: 0.63,
   },
-  // Rosa-chiclete, ameixa e azul-cobalto. Divertido, para moda, maquiagem, infantil.
+  // Tons de rosa: fundo rosa-claro, texto ameixa e destaque rosa antigo. Maquiagem, moda, infantil.
   rosa: {
-    fundo: '#FBE4EA', texto: '#3A1430', destaque: '#2B45D8', titulo: 'youngSerif', corpo: 'figtree',
+    fundo: '#FBEFF1', texto: '#3D1F2B', destaque: '#9E4A68', titulo: 'youngSerif', corpo: 'figtree',
     peso: 400, caixa: 'none', espacamento: '-0.02em', raio: '20px', escala: 0.86, letra: 0.66,
   },
   // Linho, marrom-oliva e verde-oliva. Natural e acolhedor: casa, bem-estar, comida, maternidade.

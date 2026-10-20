@@ -1,29 +1,119 @@
 ---
-// Grade de vídeos verticais.
+// Grade de vídeos verticais. Com 2 nichos ou mais, aparecem botões para filtrar por nicho.
 import Cabecalho from './Cabecalho.astro';
 import VideoCard from './VideoCard.astro';
-import { c, videosDaGrade } from '../lib/site';
+import { c, videosDaGrade, nichosDaGrade, chaveDoNicho } from '../lib/site';
 
+const v = c.videos!;
+const filtros =
+  nichosDaGrade.length >= 2
+    ? nichosDaGrade.map((nicho) => ({
+        nome: nicho,
+        chave: chaveDoNicho(nicho),
+        total: videosDaGrade.filter((video) => chaveDoNicho(video.nicho) === chaveDoNicho(nicho)).length,
+      }))
+    : [];
 ---
 
 <section class="secao recuo" id="videos" aria-labelledby="videos-titulo">
-  <Cabecalho rotulo="Portfólio" titulo={c.videos!.titulo} id="videos-titulo" />
+  <Cabecalho rotulo="Portfólio" titulo={v.titulo} id="videos-titulo" />
+  {v.texto && <p class="texto">{v.texto}</p>}
+  {
+    filtros.length > 0 && (
+      <div class="filtro" role="group" aria-label="Ver vídeos por nicho" hidden>
+        <button type="button" aria-pressed="true" data-nicho="">
+          Todos <span>{videosDaGrade.length}</span>
+        </button>
+        {filtros.map((f) => (
+          <button type="button" aria-pressed="false" data-nicho={f.chave}>
+            {f.nome} <span>{f.total}</span>
+          </button>
+        ))}
+      </div>
+    )
+  }
   <ul class="grade">
     {
-      videosDaGrade.map((v) => (
-        <li>
-          <VideoCard video={v} />
+      videosDaGrade.map((video) => (
+        <li data-nicho={chaveDoNicho(video.nicho)}>
+          <VideoCard video={video} />
         </li>
       ))
     }
   </ul>
 </section>
 
+<script>
+  // Filtro por nicho. Sem JavaScript, os botões nem aparecem e todos os vídeos ficam visíveis.
+  const filtro = document.querySelector<HTMLElement>('#videos .filtro');
+  if (filtro) {
+    filtro.hidden = false;
+    const itens = document.querySelectorAll<HTMLElement>('#videos .grade > li');
+    filtro.addEventListener('click', (evento) => {
+      const botao = (evento.target as Element).closest('button');
+      if (!botao) return;
+      const nicho = botao.dataset.nicho;
+      for (const b of filtro.querySelectorAll('button')) b.setAttribute('aria-pressed', String(b === botao));
+      for (const item of itens) item.hidden = !!nicho && item.dataset.nicho !== nicho;
+    });
+  }
+</script>
+
 <style>
+  .texto {
+    max-width: 34rem;
+    margin: -0.75rem 0 1.5rem;
+    color: var(--suave);
+  }
+  .filtro {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-bottom: 1.5rem;
+  }
+  .filtro[hidden] {
+    display: none;
+  }
+  .filtro button {
+    min-height: 2.5rem;
+    padding: 0.5em 1em;
+    border: 1px solid var(--linha);
+    border-radius: 999px;
+    background: transparent;
+    color: var(--texto);
+    font: inherit;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition:
+      background 0.15s ease,
+      border-color 0.15s ease;
+  }
+  .filtro button:hover {
+    border-color: var(--texto);
+  }
+  .filtro button[aria-pressed='true'] {
+    border-color: var(--texto);
+    background: var(--texto);
+    color: var(--fundo);
+  }
+  .filtro span {
+    margin-left: 0.2em;
+    font-size: 0.8em;
+    font-variant-numeric: tabular-nums;
+  }
   .grade {
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: 0.75rem;
+  }
+  @media (max-width: 759px) {
+    .texto {
+      margin-inline: auto;
+      text-align: center;
+    }
+    .filtro {
+      justify-content: center;
+    }
   }
   @media (min-width: 640px) {
     .grade {

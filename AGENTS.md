@@ -80,7 +80,7 @@ Resuma em uma ou duas frases ("Está tudo pronto" ou "Instalei o ffmpeg; feche e
    2. Clicar no bucket do portfólio.
    3. Clicar em **Upload** e arrastar os arquivos `.mp4` e `.jpg` novos da pasta `videos-prontos/`. Você pode abrir a pasta com `open videos-prontos` ou `explorer videos-prontos`.
    4. Esperar terminar e avisar você.
-4. Pergunte o que faltar: marca ou produto, formato (unboxing, review, tutorial...), se foi pago ou autoral, e se entra numa campanha. Depois adicione o bloco em `videos.lista`. A ordem da lista é a ordem no site.
+4. Pergunte o que faltar: marca ou produto, formato (unboxing, review, tutorial...), nicho (skincare, pets, casa...), se foi pago ou autoral, e se entra numa campanha. Depois adicione o bloco em `videos.lista`. A ordem da lista é a ordem no site. Escreva o nicho sempre do mesmo jeito em todos os vídeos dele, para o filtro agrupar certo.
 5. Build e publicação, como acima. No modo `'r2'`, se o build disser que não achou o vídeo no bucket, o upload não terminou ou o nome está diferente.
 
 Para tirar um vídeo do site, apague o bloco dele da lista. No modo `'local'`, apague também o `.mp4` e o `.jpg` de `public/videos/` (confirme antes).
@@ -118,6 +118,7 @@ Para voltar de `'r2'` para `'local'`, faça o caminho inverso: coloque os arquiv
 | Ver os 4 temas com o conteúdo dela | rode `npm run dev` e passe os links `http://localhost:4321/temas/revista/`, `/temas/noite/`, `/temas/rosa/` e `/temas/terra/` |
 | Desligar a campanha | `campanha.mostrar: false` (os vídeos dela voltam para a grade) |
 | Vídeos parados até tocar | `videos.previaAutomatica: false` |
+| Organizar os vídeos por nicho | campo `nicho` em cada vídeo. Com 2 nichos ou mais, os botões de filtro ("Todos · Skincare · Pets") aparecem sozinhos em cima da grade |
 | WhatsApp, e-mail, Instagram, TikTok, mídia kit | `contato` (WhatsApp com 55 + DDD + número) |
 | Pacotes, preços e avulsos | `valores` (`pacotes` com `nome`, `detalhe`, `preco`, `descricao` e `etiqueta` opcional para destacar; `avulsos` com `nome` e `preco`). Preço vazio aparece como "Sob consulta". Nunca invente preço: use só o que ela informar |
 | Esconder os valores | `valores.mostrar: false` |

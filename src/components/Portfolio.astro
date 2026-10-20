@@ -4,7 +4,6 @@ import Base from '../layouts/Base.astro';
 import Topo from './Topo.astro';
 import Campanha from './Campanha.astro';
 import Videos from './Videos.astro';
-import Nichos from './Nichos.astro';
 import Diferenciais from './Diferenciais.astro';
 import Marcas from './Marcas.astro';
 import Resultados from './Resultados.astro';
@@ -27,7 +26,6 @@ const t = c.comoTrabalho;
 // `link`: aparece no menu do cabeçalho fixo.
 const secoes = [
   { Componente: Videos, id: 'videos', link: 'Vídeos', mostrar: tem(c.videos, videosDaGrade) },
-  { Componente: Nichos, id: 'nichos', mostrar: tem(c.nichos, c.nichos?.lista ?? []) },
   { Componente: Diferenciais, id: 'diferenciais', mostrar: tem(c.diferenciais, c.diferenciais?.lista ?? []) },
   { Componente: Marcas, id: 'marcas', mostrar: tem(c.marcas, c.marcas?.lista ?? []) },
   {
@@ -48,6 +46,17 @@ const secoes = [
 ---
 
 <Base visual={visual} indexar={indexar}>
+  {
+    c.campanha?.mostrar && (
+      <a class="faixa-campanha" href="#campanha">
+        <span class="etiqueta">{c.campanha.nome}</span>
+        <span>{c.campanha.chamada}</span>
+        <span class="chamar">
+          {c.campanha.botao} <span aria-hidden="true">→</span>
+        </span>
+      </a>
+    )
+  }
   <header class="barra">
     <div class="recuo conteudo-barra">
       <a class="nome" href="#">{c.topo.nome}</a>
@@ -75,6 +84,39 @@ const secoes = [
 </Base>
 
 <style>
+  /* Faixa no alto da página enquanto a campanha estiver ligada. */
+  .faixa-campanha {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    gap: 0.35rem 0.9rem;
+    padding: 0.6rem 1rem;
+    background: var(--campanha-fundo);
+    color: var(--campanha-texto);
+    font-size: 0.85rem;
+    text-align: center;
+    text-decoration: none;
+  }
+  .faixa-campanha .etiqueta {
+    padding: 0.2em 0.7em;
+    border-radius: 999px;
+    background: var(--campanha-texto);
+    color: var(--campanha-fundo);
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+  .faixa-campanha .chamar {
+    font-weight: 600;
+    text-decoration: underline;
+    text-underline-offset: 0.2em;
+  }
+  .faixa-campanha:focus-visible {
+    outline-color: var(--campanha-texto);
+    outline-offset: -4px;
+  }
   /* Cabeçalho que acompanha a rolagem, com o nome e o botão de contato sempre à mão. */
   .barra {
     position: sticky;

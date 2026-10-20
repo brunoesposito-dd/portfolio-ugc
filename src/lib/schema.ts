@@ -93,6 +93,7 @@ const video = z
         'o campo "autoral" do {item} precisa ser true ou false, sem aspas',
       ),
     ),
+    nicho: opcional,
     campanha: opcional,
   })
   .transform((v) => ({ ...v, capa: v.capa || v.arquivo.replace(/\.mp4$/i, '.jpg') }));
@@ -128,6 +129,7 @@ export const esquema = z
     }),
 
     videos: secao('Vídeos', {
+      texto: opcional,
       previaAutomatica: sim(true),
       lista: z.array(video, erro('', 'a lista de vídeos precisa estar entre colchetes [ ]')).default([]),
     }),
@@ -143,11 +145,6 @@ export const esquema = z
         cor,
       })
       .optional(),
-
-    nichos: secao('Para quem eu crio', {
-      texto: opcional,
-      lista: z.array(texto('o {item} está vazio')).default([]),
-    }),
 
     diferenciais: secao('Por que trabalhar comigo', {
       lista: z
@@ -236,11 +233,11 @@ export type Conteudo = z.output<typeof esquema>;
 const SECOES: Record<string, string> = {
   modoExemplo: 'Modo exemplo', endereco: 'Endereço do site', modoDosVideos: 'Modo dos vídeos', urlDosVideos: 'URL dos vídeos',
   tema: 'Tema', cores: 'Cores',
-  topo: 'Topo', videos: 'Vídeos', campanha: 'Campanha', nichos: 'Nichos', diferenciais: 'Diferenciais', marcas: 'Marcas',
+  topo: 'Topo', videos: 'Vídeos', campanha: 'Campanha', diferenciais: 'Diferenciais', marcas: 'Marcas',
   resultados: 'Resultados', comoTrabalho: 'Como trabalho', valores: 'Valores', contato: 'Contato', seo: 'SEO',
 };
 const ITENS: Record<string, string> = {
-  'videos.lista': 'vídeo', 'nichos.lista': 'nicho', 'diferenciais.lista': 'diferencial', 'marcas.lista': 'marca',
+  'videos.lista': 'vídeo', 'diferenciais.lista': 'diferencial', 'marcas.lista': 'marca',
   'resultados.numeros': 'número', 'resultados.prints': 'print', 'resultados.depoimentos': 'depoimento',
   'comoTrabalho.incluso': 'item do "incluso"', 'valores.pacotes': 'pacote', 'valores.avulsos': 'item avulso',
 };

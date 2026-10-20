@@ -22,7 +22,7 @@ Copie um pedido, troque o que está entre [colchetes] e cole no Claude Code. Ele
 ## Vídeos
 
 6. **Vídeo novo de trabalho pago**
-   > Coloquei um vídeo novo na pasta videos-originais. É um [unboxing] para a marca [Nome da Marca], foi trabalho pago. Comprime e coloca no portfólio.
+   > Coloquei um vídeo novo na pasta videos-originais. É um [unboxing] para a marca [Nome da Marca], do nicho [skincare], foi trabalho pago. Comprime e coloca no portfólio.
 
 7. **Vídeo autoral (sem contrato)**
    > Coloquei na pasta videos-originais um vídeo que eu gravei por conta própria, sem contrato, mostrando o [produto]. Coloca no portfólio como conteúdo autoral.

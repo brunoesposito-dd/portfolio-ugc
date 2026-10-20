@@ -43,8 +43,8 @@ export default defineCreator({
   // Visual do site. Para comparar, a faixa de demonstração no topo do site tem links para os 4.
   // Opções:
   //   'revista' → creme e preto, ar de revista impressa
-  //   'noite'   → escuro com verde-limão
-  //   'rosa'    → rosa, ameixa e azul
+  //   'noite'   → quase preto com rosa-blush, ar de revista de moda
+  //   'rosa'    → tons de rosa com ameixa
   //   'terra'   → linho, marrom e verde-oliva, ar natural
   tema: 'revista',
 
@@ -82,6 +82,8 @@ export default defineCreator({
   videos: {
     mostrar: true,
     titulo: 'Vídeos',
+    // Opcional: uma frase antes dos vídeos.
+    texto: 'Vídeos curtos para anúncio e redes sociais. Toque no nicho para ver só os vídeos dele.',
     // true: os vídeos tocam sem som enquanto aparecem na tela (a marca toca para ouvir).
     // false: ficam parados mostrando a capa até alguém tocar.
     previaAutomatica: true,
@@ -97,6 +99,10 @@ export default defineCreator({
         // Formato. Sugestões: 'Unboxing', 'Review', 'Tutorial', 'Antes e depois',
         // 'Rotina', 'Depoimento', 'Receita', 'Look do dia', 'Comparativo'.
         formato: 'Unboxing',
+        // Opcional: nicho do vídeo (ex.: 'Skincare', 'Pets', 'Casa e organização').
+        // Com 2 nichos ou mais, aparecem botões em cima dos vídeos para a marca filtrar.
+        // Escreva o nome sempre igual nos vídeos do mesmo nicho.
+        nicho: 'Skincare',
         // Duração em minutos:segundos.
         duracao: '0:12',
         // true = conteúdo autoral: gravado por conta própria, SEM contrato com a marca.
@@ -112,6 +118,7 @@ export default defineCreator({
         capa: 'exemplo-02-rotina.jpg',
         marca: 'Casa Brisa (marca fictícia)',
         formato: 'Rotina',
+        nicho: 'Casa e organização',
         duracao: '0:15',
         autoral: false,
       },
@@ -120,6 +127,7 @@ export default defineCreator({
         capa: 'exemplo-03-review.jpg',
         marca: 'Sérum de vitamina C (comprado por mim)',
         formato: 'Review',
+        nicho: 'Skincare',
         duracao: '0:10',
         autoral: true,
       },
@@ -128,6 +136,7 @@ export default defineCreator({
         capa: 'exemplo-04-tutorial.jpg',
         marca: 'Pet Feliz (marca fictícia)',
         formato: 'Tutorial',
+        nicho: 'Pets',
         duracao: '0:14',
         autoral: false,
         campanha: 'Black Friday',
@@ -137,6 +146,7 @@ export default defineCreator({
         capa: 'exemplo-05-antes-e-depois.jpg',
         marca: 'Organizadores de gaveta',
         formato: 'Antes e depois',
+        nicho: 'Casa e organização',
         duracao: '0:09',
         autoral: true,
       },
@@ -145,6 +155,7 @@ export default defineCreator({
         capa: 'exemplo-06-depoimento.jpg',
         marca: 'Café Aurora (marca fictícia)',
         formato: 'Depoimento',
+        nicho: 'Café e cozinha',
         duracao: '0:11',
         autoral: false,
       },
@@ -168,15 +179,6 @@ export default defineCreator({
     // Opcional: cor de fundo do bloco, no formato '#RRGGBB'. Se não preencher, fica preto
     // (combina com Black Friday). Ex.: Natal → cor: '#1F4D36', Dia das Mães → cor: '#7A2E4D'.
     // cor: '',
-  },
-
-  // ── NICHOS / PARA QUEM EU CRIO ─────────────────────────────────────────────
-  nichos: {
-    mostrar: true,
-    titulo: 'Para quem eu crio',
-    // Opcional: uma frase antes da lista.
-    texto: 'Marcas que querem parecer gente de verdade, não comercial de TV.',
-    lista: ['Skincare', 'Casa e organização', 'Pets', 'Café e cozinha', 'Rotina de mãe'],
   },
 
   // ── DIFERENCIAIS ───────────────────────────────────────────────────────────
