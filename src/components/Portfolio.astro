@@ -1,0 +1,98 @@
+---
+// A página inteira. A ordem das seções está aqui; o conteúdo vem de src/data/creator.ts.
+import Base from '../layouts/Base.astro';
+import Topo from './Topo.astro';
+import Campanha from './Campanha.astro';
+import Videos from './Videos.astro';
+import Nichos from './Nichos.astro';
+import Diferenciais from './Diferenciais.astro';
+import Marcas from './Marcas.astro';
+import Resultados from './Resultados.astro';
+import ComoTrabalho from './ComoTrabalho.astro';
+import Contato from './Contato.astro';
+import { c, linkPrincipal, videosDaGrade, type Visual } from '../lib/site';
+
+interface Props {
+  visual?: Visual;
+  indexar?: boolean;
+}
+const { visual, indexar } = Astro.props;
+
+// Seção aparece se estiver com `mostrar: true` e tiver conteúdo.
+const tem = (secao: { mostrar: boolean } | undefined, ...listas: unknown[][]) =>
+  !!secao?.mostrar && listas.some((lista) => lista.length > 0);
+const t = c.comoTrabalho;
+
+const secoes = [
+  { Componente: Videos, mostrar: tem(c.videos, videosDaGrade) },
+  { Componente: Nichos, mostrar: tem(c.nichos, c.nichos?.lista ?? []) },
+  { Componente: Diferenciais, mostrar: tem(c.diferenciais, c.diferenciais?.lista ?? []) },
+  { Componente: Marcas, mostrar: tem(c.marcas, c.marcas?.lista ?? []) },
+  {
+    Componente: Resultados,
+    mostrar: tem(c.resultados, c.resultados?.numeros ?? [], c.resultados?.prints ?? [], c.resultados?.depoimentos ?? []),
+  },
+  { Componente: ComoTrabalho, mostrar: tem(t, t?.incluso ?? [], t?.pacotes ?? [], t?.prazo ? [t.prazo] : [], t?.direitosDeUso ? [t.direitosDeUso] : []) },
+  { Componente: Contato, mostrar: true },
+].filter((s) => s.mostrar);
+---
+
+<Base visual={visual} indexar={indexar}>
+  <Topo />
+  <main id="conteudo">
+    {c.campanha?.mostrar && <Campanha />}
+    {secoes.map(({ Componente }, i) => <Componente numero={i + 1} />)}
+  </main>
+  <footer class="recuo rodape">
+    <p>© {new Date().getFullYear()} {c.topo.nome}</p>
+    {c.modoExemplo && <p>Portfólio de exemplo, com dados fictícios</p>}
+  </footer>
+  <a class="botao flutuante" href={linkPrincipal}>{c.topo.botao.texto}</a>
+</Base>
+
+<style>
+  .rodape {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 0.5rem 2rem;
+    margin-top: clamp(4rem, 10vw, 7rem);
+    padding-block: 1.5rem 7rem;
+    border-top: 1px solid var(--texto);
+    font-size: 0.85rem;
+  }
+  /* Botão de contato que acompanha a rolagem no celular. */
+  .flutuante {
+    position: fixed;
+    right: 1rem;
+    bottom: max(1rem, env(safe-area-inset-bottom));
+    z-index: 5;
+    box-shadow: 0 0.5rem 1.5rem rgb(0 0 0 / 0.25);
+  }
+  @supports (animation-timeline: scroll()) {
+    .flutuante {
+      /* Propriedades separadas de propósito: o minificador junta o atalho "animation" com a
+         timeline num valor que o navegador rejeita. */
+      animation-name: aparecer;
+      animation-fill-mode: both;
+      animation-timing-function: linear;
+      animation-timeline: scroll();
+      animation-range: 0 30vh;
+    }
+    @keyframes aparecer {
+      from {
+        opacity: 0;
+        visibility: hidden;
+        translate: 0 1rem;
+      }
+    }
+  }
+  @media (min-width: 760px) {
+    .flutuante {
+      display: none;
+    }
+    .rodape {
+      padding-bottom: 2rem;
+    }
+  }
+</style>

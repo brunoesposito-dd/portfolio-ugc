@@ -140,6 +140,7 @@ export const esquema = z
         texto: opcional,
         botao: z.string().trim().default('Reservar minha data'),
         mensagemWhatsapp: opcional,
+        cor,
       })
       .optional(),
 

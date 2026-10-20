@@ -40,7 +40,8 @@ export default defineCreator({
   // Ex.: 'https://pub-1234567890abcdef.r2.dev'
   urlDosVideos: 'https://pub-SEU-BUCKET.r2.dev',
 
-  // Visual do site. Opções:
+  // Visual do site. Para comparar, a faixa de demonstração no topo do site tem links para os 4.
+  // Opções:
   //   'revista' → creme, preto e vermelho, ar de revista impressa
   //   'noite'   → escuro com verde-limão
   //   'rosa'    → rosa, ameixa e azul
@@ -164,6 +165,9 @@ export default defineCreator({
     // Opcional: mensagem que já vem escrita no WhatsApp quando a marca toca no botão.
     // Se não preencher: "Oi! Vi seu portfólio e quero falar sobre Black Friday."
     // mensagemWhatsapp: '',
+    // Opcional: cor de fundo do bloco, no formato '#RRGGBB'. Se não preencher, fica preto
+    // (combina com Black Friday). Ex.: Natal → cor: '#1F4D36', Dia das Mães → cor: '#7A2E4D'.
+    // cor: '',
   },
 
   // ── NICHOS / PARA QUEM EU CRIO ─────────────────────────────────────────────

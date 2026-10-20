@@ -54,13 +54,16 @@ const letras = Math.max(...c.topo.nome.split(/\s+/).map((p) => p.length), 4);
     gap: 2rem;
     padding-top: clamp(2rem, 6vw, 4rem);
   }
+  .titulo {
+    /* O nome mede a própria coluna (100cqi) para nunca quebrar no meio da palavra. */
+    container-type: inline-size;
+  }
   .titulo .kicker {
-    margin-bottom: 1rem;
+    margin-bottom: 0.9rem;
   }
   h1 {
-    font-size: min(calc(clamp(4rem, 19vw, 10.5rem) * var(--escala)), calc((100vw - 3rem) / (var(--letras) * var(--letra))));
-    line-height: 0.88;
-    overflow-wrap: anywhere;
+    font-size: min(calc(clamp(3rem, 13vw, 6.5rem) * var(--escala)), calc(100cqi / (var(--letras) * var(--letra))));
+    line-height: 0.95;
   }
   h1 em {
     display: block;
@@ -69,7 +72,7 @@ const letras = Math.max(...c.topo.nome.split(/\s+/).map((p) => p.length), 4);
   }
   .foto {
     position: relative;
-    width: 82%;
+    width: min(78%, 22rem);
     margin-bottom: 1rem;
   }
   .foto::before {
@@ -88,13 +91,13 @@ const letras = Math.max(...c.topo.nome.split(/\s+/).map((p) => p.length), 4);
     border-radius: var(--raio);
   }
   .bio {
-    max-width: 34rem;
-    margin-bottom: 1.75rem;
-    font-size: 1.15rem;
+    max-width: 32rem;
+    margin-bottom: 1.5rem;
+    font-size: 1.1rem;
   }
   @media (min-width: 860px) {
     .capa {
-      grid-template-columns: 1.3fr 1fr;
+      grid-template-columns: 1.4fr 1fr;
       grid-template-areas: 'titulo foto' 'intro foto';
       column-gap: clamp(2rem, 5vw, 5rem);
       align-items: end;
@@ -104,16 +107,14 @@ const letras = Math.max(...c.topo.nome.split(/\s+/).map((p) => p.length), 4);
     }
     .foto {
       grid-area: foto;
-      width: auto;
+      width: min(100% - 1rem, 26rem);
+      justify-self: end;
       align-self: start;
       margin-right: 1rem;
     }
     .intro {
       grid-area: intro;
       align-self: start;
-    }
-    h1 {
-      font-size: min(calc(clamp(4rem, 13vw, 11rem) * var(--escala)), calc(52vw / (var(--letras) * var(--letra))));
     }
   }
 </style>

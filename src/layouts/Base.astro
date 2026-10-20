@@ -1,9 +1,20 @@
 ---
 // Estrutura da página: <head> (SEO, prévia no WhatsApp, fontes) e o estilo base.
 import { Font } from 'astro:assets';
-import { c, paleta, tema, escuro, fontes, endereco, tituloDaPagina, descricaoDaPagina } from '../lib/site';
+import { c, visual as visualPadrao, endereco, tituloDaPagina, descricaoDaPagina, linkDeContato, type Visual } from '../lib/site';
+import { TEMAS } from '../lib/temas';
 
-const imagemDeCompartilhamento = `${endereco}/og.png`;
+interface Props {
+  /** Tema da página. Padrão: o escolhido em src/data/creator.ts. */
+  visual?: Visual;
+  /** Páginas de demonstração dos temas não entram no Google. */
+  indexar?: boolean;
+}
+const { visual = visualPadrao, indexar = true } = Astro.props;
+const { paleta, tema, fontes, escuro, campanha } = visual;
+
+// Sem endereço configurado (ex.: no computador), usa o endereço de onde a página está sendo vista.
+const base = endereco || Astro.url.origin;
 const variaveis = {
   '--fundo': paleta.fundo,
   '--texto': paleta.texto,
@@ -12,6 +23,8 @@ const variaveis = {
   '--linha': paleta.linha,
   '--destaque': paleta.destaque,
   '--no-destaque': paleta.noDestaque,
+  '--campanha-fundo': campanha.fundo,
+  '--campanha-texto': campanha.texto,
   '--f-titulo': `var(${fontes.titulo.variavel})`,
   '--f-corpo': `var(${fontes.corpo.variavel})`,
   '--peso-titulo': tema.peso,
@@ -24,7 +37,25 @@ const variaveis = {
   'color-scheme': escuro ? 'dark' : 'light',
 };
 const estilo = Object.entries(variaveis).map(([k, v]) => `${k}:${v}`).join(';');
-const preloadTitulo = [{ weight: fontes.titulo.pesos[0], style: 'normal' }, ...(fontes.titulo.italico ? [{ weight: fontes.titulo.pesos[0], style: 'italic' }] : [])];
+const preloadTitulo = [
+  { weight: fontes.titulo.pesos[0], style: 'normal' },
+  ...(fontes.titulo.italico ? [{ weight: fontes.titulo.pesos[0], style: 'italic' }] : []),
+];
+
+// Dados estruturados para o Google entender quem é a creator.
+const perfis = [linkDeContato('instagram'), linkDeContato('tiktok')].filter(Boolean);
+const pessoa = {
+  '@context': 'https://schema.org',
+  '@type': 'Person',
+  name: c.topo.nome,
+  jobTitle: 'Creator de UGC',
+  description: descricaoDaPagina,
+  url: `${base}/`,
+  image: `${base}/og.png`,
+  ...(perfis.length > 0 && { sameAs: perfis }),
+  ...(c.nichos?.lista.length && { knowsAbout: c.nichos.lista }),
+};
+const nomesDosTemas: Record<string, string> = { revista: 'Revista', noite: 'Noite', rosa: 'Rosa', terra: 'Terra' };
 ---
 
 <!doctype html>
@@ -34,22 +65,25 @@ const preloadTitulo = [{ weight: fontes.titulo.pesos[0], style: 'normal' }, ...(
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>{tituloDaPagina}</title>
     <meta name="description" content={descricaoDaPagina} />
+    {!indexar && <meta name="robots" content="noindex" />}
+    <link rel="canonical" href={`${base}/`} />
     <meta name="theme-color" content={paleta.fundo} />
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
-    {endereco && <link rel="canonical" href={`${endereco}/`} />}
 
-    <meta property="og:type" content="website" />
+    <meta property="og:type" content="profile" />
     <meta property="og:locale" content="pt_BR" />
+    <meta property="og:site_name" content={c.topo.nome} />
     <meta property="og:title" content={tituloDaPagina} />
     <meta property="og:description" content={descricaoDaPagina} />
-    {endereco && <meta property="og:url" content={`${endereco}/`} />}
-    <meta property="og:image" content={imagemDeCompartilhamento} />
+    <meta property="og:url" content={`${base}/`} />
+    <meta property="og:image" content={`${base}/og.png`} />
     <meta property="og:image:type" content="image/png" />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
     <meta property="og:image:alt" content={`${c.topo.nome}, creator UGC`} />
     <meta name="twitter:card" content="summary_large_image" />
+    <script type="application/ld+json" set:html={JSON.stringify(pessoa).replaceAll('<', '\\u003c')} />
 
     <Font cssVariable={fontes.titulo.variavel as any} preload={preloadTitulo} />
     <Font cssVariable={fontes.corpo.variavel as any} preload={[{ weight: 400, style: 'normal' }]} />
@@ -58,7 +92,17 @@ const preloadTitulo = [{ weight: fontes.titulo.pesos[0], style: 'normal' }, ...(
     <a class="pular" href="#conteudo">Pular para o conteúdo</a>
     {
       c.modoExemplo && (
-        <p class="faixa-exemplo">Portfólio de demonstração: a creator, as marcas e os números são fictícios.</p>
+        <div class="faixa-exemplo">
+          <p>Portfólio de demonstração: a creator, as marcas e os números são fictícios.</p>
+          <nav aria-label="Ver em outro tema">
+            Ver nos temas:
+            {Object.keys(TEMAS).map((nome) => (
+              <a href={`/temas/${nome}/`} aria-current={nome === visual.nome ? 'page' : undefined}>
+                {nomesDosTemas[nome] ?? nome}
+              </a>
+            ))}
+          </nav>
+        </div>
       )
     }
     <slot />
@@ -190,10 +234,32 @@ const preloadTitulo = [{ weight: fontes.titulo.pesos[0], style: 'normal' }, ...(
     top: 1rem;
   }
   .faixa-exemplo {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.25rem 1.5rem;
     padding: 0.55rem 1rem;
     background: var(--texto);
     color: var(--fundo);
     font-size: 0.8rem;
     text-align: center;
+  }
+  .faixa-exemplo nav {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0 0.9rem;
+  }
+  .faixa-exemplo a {
+    font-weight: 600;
+  }
+  .faixa-exemplo a[aria-current] {
+    text-decoration: none;
+  }
+  .faixa-exemplo a[aria-current]::before {
+    content: '● ' / '';
+  }
+  .faixa-exemplo :focus-visible {
+    outline-color: var(--fundo);
   }
 </style>

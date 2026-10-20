@@ -74,7 +74,7 @@ Resuma em uma ou duas frases ("Está tudo pronto" ou "Instalei o ffmpeg; feche e
 ### Adicionar um vídeo novo
 
 1. Peça para ela colocar o arquivo original na pasta `videos-originais/`. Você pode abrir a pasta para ela: `open videos-originais` (Mac) ou `explorer videos-originais` (Windows).
-2. Rode `npm run comprimir`. Ele gera o `.mp4` (vertical 720x1280) e a capa `.jpg` com nomes limpos, sem espaço nem acento, e mostra no fim o tamanho, a duração e um bloco pronto para colar.
+2. Rode `npm run comprimir`. Ele gera o `.mp4` (vertical 720x1280) e a capa `.jpg` com nomes limpos, sem espaço nem acento, e mostra no fim o tamanho, a duração e um bloco pronto para colar. A capa é o primeiro quadro do vídeo, para a prévia começar sem dar salto na tela. Se o primeiro quadro for quase preto, ele usa o de 1 segundo e avisa.
 3. Só no modo `'r2'`: explique como enviar os arquivos para o bucket:
    1. Entrar em https://dash.cloudflare.com e abrir **Storage & databases** > **R2**.
    2. Clicar no bucket do portfólio.
@@ -114,6 +114,8 @@ Para voltar de `'r2'` para `'local'`, faça o caminho inverso: coloque os arquiv
 | Trocar o visual | `tema: 'revista' \| 'noite' \| 'rosa' \| 'terra'` ("mais escuro" = `'noite'`) |
 | Mudar uma cor | `cores: { fundo, texto, destaque }`, no formato `'#RRGGBB'`; o build avisa se ficar ilegível |
 | Campanha (Black Friday, Natal, Dia das Mães) | `campanha.nome`, `campanha.chamada`, `campanha.texto`; os vídeos entram com `campanha: '<mesmo nome>'` |
+| Cor do bloco da campanha | `campanha.cor` (padrão: preto; ex.: Natal `'#1F4D36'`) |
+| Ver os 4 temas com o conteúdo dela | rode `npm run dev` e passe os links `http://localhost:4321/temas/revista/`, `/temas/noite/`, `/temas/rosa/` e `/temas/terra/` |
 | Desligar a campanha | `campanha.mostrar: false` (os vídeos dela voltam para a grade) |
 | Vídeos parados até tocar | `videos.previaAutomatica: false` |
 | WhatsApp, e-mail, Instagram, TikTok, mídia kit | `contato` (WhatsApp com 55 + DDD + número) |
@@ -122,6 +124,8 @@ Para voltar de `'r2'` para `'local'`, faça o caminho inverso: coloque os arquiv
 | Endereço do site / domínio próprio | `endereco` |
 
 Uma seção opcional com a lista vazia (`[]`) some sozinha. Os títulos das seções podem ser trocados pelo campo `titulo` de cada uma.
+
+As páginas `/temas/<nome>/` mostram o mesmo conteúdo em cada tema, só para comparar. No computador (`npm run dev`) elas sempre existem. No site publicado, só aparecem enquanto `modoExemplo` for `true`, e nunca entram no Google.
 
 ## Quando o build falha
 

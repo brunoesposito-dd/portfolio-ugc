@@ -1,7 +1,7 @@
 // npm run comprimir
 // Pega os vídeos de videos-originais/ e gera, para cada um:
 //   • nome-do-video.mp4 → H.264, vertical 720x1280, até 30 fps, pronto para web, sem metadados
-//   • nome-do-video.jpg → capa (o quadro mais representativo do começo do vídeo)
+//   • nome-do-video.jpg → capa: o primeiro quadro, para a prévia começar sem dar salto na tela
 // Onde salva depende de `modoDosVideos` em src/data/creator.ts:
 //   • 'local' → public/videos/ (vai junto com o site; cada arquivo fica abaixo de 24 MB)
 //   • 'r2'    → videos-prontos/ (para arrastar para o bucket no Cloudflare R2)
@@ -9,6 +9,7 @@
 import { spawnSync } from 'node:child_process';
 import { existsSync, mkdirSync, readFileSync, readdirSync, renameSync, rmSync, statSync } from 'node:fs';
 import { join, parse } from 'node:path';
+import sharp from 'sharp';
 
 const conteudo = existsSync('src/data/creator.ts') ? readFileSync('src/data/creator.ts', 'utf8') : '';
 const MODO = /^\s*modoDosVideos:\s*['"]r2['"]/m.test(conteudo) ? 'r2' : 'local';
@@ -136,11 +137,18 @@ for (const original of originais) {
   }
   renameSync(temporario, mp4);
 
-  const capa = roda('ffmpeg', [
-    '-hide_banner', '-loglevel', 'error', '-y', '-t', '3', '-i', mp4,
-    '-vf', 'thumbnail=90,scale=540:960', '-frames:v', '1', '-q:v', '4', '-map_metadata', '-1', jpg,
-  ]);
-  if (capa.status !== 0) avisos.push(`${original}: o vídeo ficou pronto, mas não consegui gerar a capa.`);
+  const gerarCapa = (segundo) =>
+    roda('ffmpeg', [
+      '-hide_banner', '-loglevel', 'error', '-y', '-ss', String(segundo), '-i', mp4,
+      '-frames:v', '1', '-vf', 'scale=540:960', '-q:v', '4', '-map_metadata', '-1', jpg,
+    ]).status === 0;
+  if (!gerarCapa(0)) avisos.push(`${original}: o vídeo ficou pronto, mas não consegui gerar a capa.`);
+  else {
+    // Primeiro quadro quase preto (vídeo que começa com fade) vira uma capa feia: usa o de 1 segundo.
+    const { channels } = await sharp(jpg).stats();
+    if (channels.slice(0, 3).every((canal) => canal.mean < 25) && gerarCapa(Math.min(1, medidas.duracao / 2)))
+      avisos.push(`${original}: o primeiro quadro é quase preto, então usei o quadro de 1 segundo como capa.`);
+  }
 
   prontos.push({ original, nome, duracao: medir(mp4)?.duracao ?? medidas.duracao });
 }

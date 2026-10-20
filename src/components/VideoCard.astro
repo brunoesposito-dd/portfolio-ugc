@@ -151,8 +151,9 @@ const descricao = `${video.formato} para ${video.marca}, ${video.duracao}`;
   }
   figcaption {
     display: grid;
-    grid-template-columns: auto 1fr auto;
+    grid-template-columns: auto minmax(0, 1fr) auto;
     column-gap: 0.6rem;
+    overflow-wrap: break-word;
     padding-top: 0.8rem;
     font-size: 0.9rem;
     line-height: 1.35;
@@ -161,7 +162,7 @@ const descricao = `${video.formato} para ${video.marca}, ${video.duracao}`;
     grid-row: span 2;
     font-family: var(--f-titulo);
     font-style: var(--italico);
-    font-size: 1.55rem;
+    font-size: 1.35rem;
     line-height: 1;
   }
   .formato {
@@ -181,9 +182,7 @@ const descricao = `${video.formato} para ${video.marca}, ${video.duracao}`;
     padding: 0.25em 0.7em;
     border: 1px solid currentColor;
     border-radius: 999px;
-    font-size: 0.7rem;
+    font-size: 0.75rem;
     font-weight: 600;
-    letter-spacing: 0.06em;
-    text-transform: uppercase;
   }
 </style>

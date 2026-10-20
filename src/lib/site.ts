@@ -3,7 +3,7 @@ import { existsSync, readdirSync, statSync } from 'node:fs';
 import { join } from 'node:path';
 import creator from '../data/creator';
 import { esquema, explicar, mensagemPadrao } from './schema';
-import { FONTES, TEMAS, variavelDaFonte } from './temas';
+import { FONTES, TEMAS, variavelDaFonte, type NomeTema } from './temas';
 import { contraste, montarPaleta } from './cores';
 
 class ProblemasNoConteudo extends Error {
@@ -17,21 +17,37 @@ class ProblemasNoConteudo extends Error {
 function validar() {
   const resultado = esquema.safeParse(creator, { error: mensagemPadrao });
   if (!resultado.success) throw new ProblemasNoConteudo(resultado.error.issues.map((i) => explicar(i.path, i.message)));
-  const c = resultado.data;
-  const { fundo, texto, destaque } = TEMAS[c.tema];
-  const { paleta, problemas } = montarPaleta({ fundo, texto, destaque, ...c.cores });
-  if (problemas.length) throw new ProblemasNoConteudo(problemas.map((p) => explicar(['cores', p.campo], p.mensagem)));
-  return { c, paleta };
+  return resultado.data;
 }
 
-export const { c, paleta } = validar();
+export const c = validar();
 
-export const tema = TEMAS[c.tema];
-export const escuro = contraste(paleta.fundo, '#000000') < contraste(paleta.fundo, '#FFFFFF');
-export const fontes = {
-  titulo: { ...FONTES[tema.titulo], variavel: variavelDaFonte(tema.titulo) },
-  corpo: { ...FONTES[tema.corpo], variavel: variavelDaFonte(tema.corpo) },
-};
+/** Tudo o que muda de um tema para outro: cores (já conferidas), fontes e estilo dos títulos. */
+export function visualDoTema(nome: NomeTema, cores: Partial<Record<'fundo' | 'texto' | 'destaque', string>> = {}) {
+  const tema = TEMAS[nome];
+  const { paleta, problemas } = montarPaleta({ fundo: tema.fundo, texto: tema.texto, destaque: tema.destaque, ...cores });
+  const escuro = contraste(paleta.fundo, '#000000') < contraste(paleta.fundo, '#FFFFFF');
+  // Bloco da campanha: preto por padrão (combina com Black Friday), ou a cor escolhida em campanha.cor.
+  const fundoDaCampanha = c.campanha?.cor ?? (escuro ? '#000000' : '#111111');
+  const textoDaCampanha = [paleta.fundo, paleta.texto, '#FFFFFF', '#000000'].find((cor) => contraste(cor, fundoDaCampanha) >= 4.5)!;
+  return {
+    nome,
+    tema,
+    paleta,
+    escuro,
+    campanha: { fundo: fundoDaCampanha, texto: textoDaCampanha },
+    fontes: {
+      titulo: { ...FONTES[tema.titulo], variavel: variavelDaFonte(tema.titulo) },
+      corpo: { ...FONTES[tema.corpo], variavel: variavelDaFonte(tema.corpo) },
+    },
+    problemas,
+  };
+}
+export type Visual = ReturnType<typeof visualDoTema>;
+
+export const visual = visualDoTema(c.tema, c.cores);
+if (visual.problemas.length) throw new ProblemasNoConteudo(visual.problemas.map((p) => explicar(['cores', p.campo], p.mensagem)));
+export const { paleta, tema, fontes } = visual;
 
 /** Endereço público do site. Sem `endereco` no creator.ts, usa o da Cloudflare Pages. */
 export const endereco = (() => {
