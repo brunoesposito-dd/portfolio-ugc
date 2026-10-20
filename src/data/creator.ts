@@ -83,7 +83,7 @@ export default defineCreator({
     mostrar: true,
     titulo: 'Vídeos',
     // Opcional: uma frase antes dos vídeos.
-    texto: 'Vídeos curtos para anúncio e redes sociais. Toque no nicho para ver só os vídeos dele.',
+    texto: 'Vídeos curtos para anúncio e redes sociais, separados por nicho.',
     // true: os vídeos tocam sem som enquanto aparecem na tela (a marca toca para ouvir).
     // false: ficam parados mostrando a capa até alguém tocar.
     previaAutomatica: true,
@@ -100,8 +100,9 @@ export default defineCreator({
         // 'Rotina', 'Depoimento', 'Receita', 'Look do dia', 'Comparativo'.
         formato: 'Unboxing',
         // Opcional: nicho do vídeo (ex.: 'Skincare', 'Pets', 'Casa e organização').
-        // Com 2 nichos ou mais, aparecem botões em cima dos vídeos para a marca filtrar.
-        // Escreva o nome sempre igual nos vídeos do mesmo nicho.
+        // Com 2 nichos ou mais, os vídeos aparecem separados por nicho, cada um com
+        // seu título, e com atalhos no alto da seção. Escreva o nome sempre igual
+        // nos vídeos do mesmo nicho. Os nichos aparecem na ordem desta lista.
         nicho: 'Skincare',
         // Duração em minutos:segundos.
         duracao: '0:12',
@@ -114,15 +115,6 @@ export default defineCreator({
         campanha: 'Black Friday',
       },
       {
-        arquivo: 'exemplo-02-rotina.mp4',
-        capa: 'exemplo-02-rotina.jpg',
-        marca: 'Casa Brisa (marca fictícia)',
-        formato: 'Rotina',
-        nicho: 'Casa e organização',
-        duracao: '0:15',
-        autoral: false,
-      },
-      {
         arquivo: 'exemplo-03-review.mp4',
         capa: 'exemplo-03-review.jpg',
         marca: 'Sérum de vitamina C (comprado por mim)',
@@ -132,14 +124,31 @@ export default defineCreator({
         autoral: true,
       },
       {
-        arquivo: 'exemplo-04-tutorial.mp4',
-        capa: 'exemplo-04-tutorial.jpg',
-        marca: 'Pet Feliz (marca fictícia)',
-        formato: 'Tutorial',
-        nicho: 'Pets',
-        duracao: '0:14',
+        arquivo: 'exemplo-07-rotina-noturna.mp4',
+        capa: 'exemplo-07-rotina-noturna.jpg',
+        marca: 'Lumi Cosméticos (marca fictícia)',
+        formato: 'Rotina',
+        nicho: 'Skincare',
+        duracao: '0:13',
         autoral: false,
-        campanha: 'Black Friday',
+      },
+      {
+        arquivo: 'exemplo-10-antes-e-depois.mp4',
+        capa: 'exemplo-10-antes-e-depois.jpg',
+        marca: 'Protetor solar (comprado por mim)',
+        formato: 'Antes e depois',
+        nicho: 'Skincare',
+        duracao: '0:09',
+        autoral: true,
+      },
+      {
+        arquivo: 'exemplo-02-rotina.mp4',
+        capa: 'exemplo-02-rotina.jpg',
+        marca: 'Casa Brisa (marca fictícia)',
+        formato: 'Rotina',
+        nicho: 'Casa e organização',
+        duracao: '0:15',
+        autoral: false,
       },
       {
         arquivo: 'exemplo-05-antes-e-depois.mp4',
@@ -157,6 +166,34 @@ export default defineCreator({
         formato: 'Depoimento',
         nicho: 'Café e cozinha',
         duracao: '0:11',
+        autoral: false,
+      },
+      {
+        arquivo: 'exemplo-09-receita.mp4',
+        capa: 'exemplo-09-receita.jpg',
+        marca: 'Café Aurora (marca fictícia)',
+        formato: 'Receita',
+        nicho: 'Café e cozinha',
+        duracao: '0:14',
+        autoral: false,
+      },
+      {
+        arquivo: 'exemplo-04-tutorial.mp4',
+        capa: 'exemplo-04-tutorial.jpg',
+        marca: 'Pet Feliz (marca fictícia)',
+        formato: 'Tutorial',
+        nicho: 'Pets',
+        duracao: '0:14',
+        autoral: false,
+        campanha: 'Black Friday',
+      },
+      {
+        arquivo: 'exemplo-08-review.mp4',
+        capa: 'exemplo-08-review.jpg',
+        marca: 'Pet Feliz (marca fictícia)',
+        formato: 'Review',
+        nicho: 'Pets',
+        duracao: '0:10',
         autoral: false,
       },
     ],

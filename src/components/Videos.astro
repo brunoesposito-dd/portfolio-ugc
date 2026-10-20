@@ -1,63 +1,61 @@
 ---
-// Grade de vídeos verticais. Com 2 nichos ou mais, aparecem botões para filtrar por nicho.
+// Vídeos verticais. Com 2 nichos ou mais, aparecem separados por nicho (todos abertos, um
+// bloco embaixo do outro), com atalhos no alto que acompanham a rolagem.
 import Cabecalho from './Cabecalho.astro';
 import VideoCard from './VideoCard.astro';
-import { c, videosDaGrade, nichosDaGrade, chaveDoNicho } from '../lib/site';
+import { c, videosDaGrade, chaveDoNicho, type Video } from '../lib/site';
 
 const v = c.videos!;
-const filtros =
-  nichosDaGrade.length >= 2
-    ? nichosDaGrade.map((nicho) => ({
-        nome: nicho,
-        chave: chaveDoNicho(nicho),
-        total: videosDaGrade.filter((video) => chaveDoNicho(video.nicho) === chaveDoNicho(nicho)).length,
-      }))
-    : [];
+
+// Agrupa na ordem em que os nichos aparecem na lista; vídeos sem nicho vão para o fim.
+const grupos = new Map<string, { nome: string; chave: string; videos: Video[] }>();
+for (const video of videosDaGrade) {
+  const chave = video.nicho ? chaveDoNicho(video.nicho) : 'outros';
+  if (!grupos.has(chave)) grupos.set(chave, { nome: video.nicho || 'Outros vídeos', chave, videos: [] });
+  grupos.get(chave)!.videos.push(video);
+}
+const lista = [...grupos.values()].sort((a, b) => Number(a.chave === 'outros') - Number(b.chave === 'outros'));
+const porNicho = lista.length >= 2;
+const quantos = (n: number) => `${n} ${n === 1 ? 'vídeo' : 'vídeos'}`;
 ---
 
 <section class="secao recuo" id="videos" aria-labelledby="videos-titulo">
   <Cabecalho rotulo="Portfólio" titulo={v.titulo} id="videos-titulo" />
   {v.texto && <p class="texto">{v.texto}</p>}
   {
-    filtros.length > 0 && (
-      <div class="filtro" role="group" aria-label="Ver vídeos por nicho" hidden>
-        <button type="button" aria-pressed="true" data-nicho="">
-          Todos <span>{videosDaGrade.length}</span>
-        </button>
-        {filtros.map((f) => (
-          <button type="button" aria-pressed="false" data-nicho={f.chave}>
-            {f.nome} <span>{f.total}</span>
-          </button>
-        ))}
-      </div>
+    porNicho && (
+      <nav class="atalhos" aria-label="Ir para um nicho">
+        <ul>
+          {lista.map((g) => (
+            <li>
+              <a href={`#nicho-${g.chave}`}>
+                {g.nome} <span>{g.videos.length}</span>
+              </a>
+            </li>
+          ))}
+        </ul>
+      </nav>
     )
   }
-  <ul class="grade">
-    {
-      videosDaGrade.map((video) => (
-        <li data-nicho={chaveDoNicho(video.nicho)}>
-          <VideoCard video={video} />
-        </li>
-      ))
-    }
-  </ul>
-</section>
-
-<script>
-  // Filtro por nicho. Sem JavaScript, os botões nem aparecem e todos os vídeos ficam visíveis.
-  const filtro = document.querySelector<HTMLElement>('#videos .filtro');
-  if (filtro) {
-    filtro.hidden = false;
-    const itens = document.querySelectorAll<HTMLElement>('#videos .grade > li');
-    filtro.addEventListener('click', (evento) => {
-      const botao = (evento.target as Element).closest('button');
-      if (!botao) return;
-      const nicho = botao.dataset.nicho;
-      for (const b of filtro.querySelectorAll('button')) b.setAttribute('aria-pressed', String(b === botao));
-      for (const item of itens) item.hidden = !!nicho && item.dataset.nicho !== nicho;
-    });
+  {
+    lista.map((g) => (
+      <div class="grupo" id={porNicho ? `nicho-${g.chave}` : undefined}>
+        {porNicho && (
+          <h3>
+            {g.nome} <span>{quantos(g.videos.length)}</span>
+          </h3>
+        )}
+        <ul class="grade">
+          {g.videos.map((video) => (
+            <li>
+              <VideoCard video={video} />
+            </li>
+          ))}
+        </ul>
+      </div>
+    ))
   }
-</script>
+</section>
 
 <style>
   .texto {
@@ -65,41 +63,57 @@ const filtros =
     margin: -0.75rem 0 1.5rem;
     color: var(--suave);
   }
-  .filtro {
+  /* Atalhos dos nichos. No computador ficam presos abaixo do cabeçalho enquanto a marca rola. */
+  .atalhos ul {
     display: flex;
     flex-wrap: wrap;
     gap: 0.5rem;
-    margin-bottom: 1.5rem;
   }
-  .filtro[hidden] {
-    display: none;
-  }
-  .filtro button {
-    min-height: 2.5rem;
-    padding: 0.5em 1em;
+  .atalhos a {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35em;
+    min-height: 2.4rem;
+    padding: 0.45em 1em;
     border: 1px solid var(--linha);
     border-radius: 999px;
-    background: transparent;
-    color: var(--texto);
-    font: inherit;
     font-size: 0.9rem;
-    cursor: pointer;
-    transition:
-      background 0.15s ease,
-      border-color 0.15s ease;
+    text-decoration: none;
+    white-space: nowrap;
+    transition: border-color 0.15s ease;
   }
-  .filtro button:hover {
+  .atalhos a:hover {
     border-color: var(--texto);
   }
-  .filtro button[aria-pressed='true'] {
-    border-color: var(--texto);
-    background: var(--texto);
-    color: var(--fundo);
-  }
-  .filtro span {
-    margin-left: 0.2em;
+  .atalhos span {
     font-size: 0.8em;
+    color: var(--suave);
     font-variant-numeric: tabular-nums;
+  }
+  .grupo {
+    /* O título do nicho para logo abaixo do cabeçalho fixo. */
+    scroll-margin-top: 5rem;
+  }
+  .grupo + .grupo {
+    margin-top: clamp(2.5rem, 6vw, 3.5rem);
+  }
+  .atalhos + .grupo {
+    margin-top: 1.75rem;
+  }
+  h3 {
+    display: flex;
+    align-items: baseline;
+    gap: 0.6rem;
+    margin-bottom: 1rem;
+    font-size: calc(clamp(1.4rem, 3.5vw, 1.9rem) * var(--escala));
+  }
+  h3 span {
+    font-family: var(--f-corpo);
+    font-size: 0.8rem;
+    font-weight: 400;
+    letter-spacing: 0;
+    text-transform: none;
+    color: var(--suave);
   }
   .grade {
     display: grid;
@@ -111,8 +125,28 @@ const filtros =
       margin-inline: auto;
       text-align: center;
     }
-    .filtro {
+    h3 {
       justify-content: center;
+    }
+    .atalhos ul {
+      justify-content: center;
+    }
+    .atalhos a {
+      min-height: 2.25rem;
+      font-size: 0.85rem;
+    }
+  }
+  @media (min-width: 760px) {
+    .atalhos {
+      position: sticky;
+      top: 3.75rem;
+      z-index: 5;
+      margin-inline: calc(-1 * clamp(1rem, 5vw, 3rem));
+      padding: 0.6rem clamp(1rem, 5vw, 3rem);
+      background: var(--fundo);
+    }
+    .grupo {
+      scroll-margin-top: 8.5rem;
     }
   }
   @media (min-width: 640px) {

@@ -118,7 +118,7 @@ Para voltar de `'r2'` para `'local'`, faça o caminho inverso: coloque os arquiv
 | Ver os 4 temas com o conteúdo dela | rode `npm run dev` e passe os links `http://localhost:4321/temas/revista/`, `/temas/noite/`, `/temas/rosa/` e `/temas/terra/` |
 | Desligar a campanha | `campanha.mostrar: false` (os vídeos dela voltam para a grade) |
 | Vídeos parados até tocar | `videos.previaAutomatica: false` |
-| Organizar os vídeos por nicho | campo `nicho` em cada vídeo. Com 2 nichos ou mais, os botões de filtro ("Todos · Skincare · Pets") aparecem sozinhos em cima da grade |
+| Organizar os vídeos por nicho | campo `nicho` em cada vídeo. Com 2 nichos ou mais, os vídeos aparecem separados por nicho (todos abertos, um bloco embaixo do outro) e com atalhos no alto da seção. A ordem dos nichos é a ordem em que aparecem na lista |
 | WhatsApp, e-mail, Instagram, TikTok, mídia kit | `contato` (WhatsApp com 55 + DDD + número) |
 | Pacotes, preços e avulsos | `valores` (`pacotes` com `nome`, `detalhe`, `preco`, `descricao` e `etiqueta` opcional para destacar; `avulsos` com `nome` e `preco`). Preço vazio aparece como "Sob consulta". Nunca invente preço: use só o que ela informar |
 | Esconder os valores | `valores.mostrar: false` |

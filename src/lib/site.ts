@@ -93,7 +93,6 @@ const nichosUnicos = (videos: Video[]) => {
   return [...vistos.values()];
 };
 export const nichosDosVideos = nichosUnicos(todosOsVideos);
-export const nichosDaGrade = nichosUnicos(videosDaGrade);
 export const chaveDoNicho = (nicho = '') => normalizar(nicho).replace(/[^a-z0-9]+/g, '-');
 
 const arquivosDosVideos = todosOsVideos.flatMap((v) => [
