@@ -1,0 +1,199 @@
+---
+// Estrutura da página: <head> (SEO, prévia no WhatsApp, fontes) e o estilo base.
+import { Font } from 'astro:assets';
+import { c, paleta, tema, escuro, fontes, endereco, tituloDaPagina, descricaoDaPagina } from '../lib/site';
+
+const imagemDeCompartilhamento = `${endereco}/og.png`;
+const variaveis = {
+  '--fundo': paleta.fundo,
+  '--texto': paleta.texto,
+  '--suave': paleta.suave,
+  '--superficie': paleta.superficie,
+  '--linha': paleta.linha,
+  '--destaque': paleta.destaque,
+  '--no-destaque': paleta.noDestaque,
+  '--f-titulo': `var(${fontes.titulo.variavel})`,
+  '--f-corpo': `var(${fontes.corpo.variavel})`,
+  '--peso-titulo': tema.peso,
+  '--caixa-titulo': tema.caixa,
+  '--espaco-titulo': tema.espacamento,
+  '--italico': fontes.titulo.italico ? 'italic' : 'normal',
+  '--raio': tema.raio,
+  '--escala': tema.escala,
+  '--letra': tema.letra,
+  'color-scheme': escuro ? 'dark' : 'light',
+};
+const estilo = Object.entries(variaveis).map(([k, v]) => `${k}:${v}`).join(';');
+const preloadTitulo = [{ weight: fontes.titulo.pesos[0], style: 'normal' }, ...(fontes.titulo.italico ? [{ weight: fontes.titulo.pesos[0], style: 'italic' }] : [])];
+---
+
+<!doctype html>
+<html lang="pt-BR" style={estilo}>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{tituloDaPagina}</title>
+    <meta name="description" content={descricaoDaPagina} />
+    <meta name="theme-color" content={paleta.fundo} />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    {endereco && <link rel="canonical" href={`${endereco}/`} />}
+
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="pt_BR" />
+    <meta property="og:title" content={tituloDaPagina} />
+    <meta property="og:description" content={descricaoDaPagina} />
+    {endereco && <meta property="og:url" content={`${endereco}/`} />}
+    <meta property="og:image" content={imagemDeCompartilhamento} />
+    <meta property="og:image:type" content="image/png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content={`${c.topo.nome}, creator UGC`} />
+    <meta name="twitter:card" content="summary_large_image" />
+
+    <Font cssVariable={fontes.titulo.variavel as any} preload={preloadTitulo} />
+    <Font cssVariable={fontes.corpo.variavel as any} preload={[{ weight: 400, style: 'normal' }]} />
+  </head>
+  <body>
+    <a class="pular" href="#conteudo">Pular para o conteúdo</a>
+    {
+      c.modoExemplo && (
+        <p class="faixa-exemplo">Portfólio de demonstração: a creator, as marcas e os números são fictícios.</p>
+      )
+    }
+    <slot />
+  </body>
+</html>
+
+<style is:global>
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box;
+  }
+  html {
+    -webkit-text-size-adjust: 100%;
+    scroll-behavior: smooth;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+    *,
+    *::before,
+    *::after {
+      transition: none !important;
+      animation: none !important;
+    }
+  }
+  body {
+    margin: 0;
+    background: var(--fundo);
+    color: var(--texto);
+    font-family: var(--f-corpo);
+    font-size: 1.0625rem;
+    line-height: 1.55;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+  }
+  img,
+  video,
+  svg {
+    display: block;
+    max-width: 100%;
+  }
+  h1,
+  h2,
+  h3 {
+    margin: 0;
+    font-family: var(--f-titulo);
+    font-weight: var(--peso-titulo);
+    text-transform: var(--caixa-titulo);
+    letter-spacing: var(--espaco-titulo);
+    line-height: 1;
+    text-wrap: balance;
+  }
+  p,
+  ul,
+  ol,
+  dl,
+  dd,
+  figure,
+  blockquote {
+    margin: 0;
+  }
+  ul,
+  ol {
+    padding: 0;
+    list-style: none;
+  }
+  a {
+    color: inherit;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 0.2em;
+  }
+  :focus-visible {
+    outline: 3px solid var(--texto);
+    outline-offset: 3px;
+  }
+
+  /* Peças usadas em várias seções */
+  .recuo {
+    width: min(100% - 2 * clamp(1rem, 5vw, 3rem), 76rem);
+    margin-inline: auto;
+  }
+  .kicker {
+    font-size: 0.78rem;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+  }
+  .botao {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.6em;
+    min-height: 3rem;
+    padding: 0.85em 1.5em;
+    border-radius: max(var(--raio), 2px);
+    background: var(--destaque);
+    color: var(--no-destaque);
+    font-weight: 600;
+    text-decoration: none;
+    transition: transform 0.15s ease;
+  }
+  .botao:hover {
+    transform: translateY(-2px);
+  }
+  .botao:active {
+    transform: none;
+  }
+  .secao {
+    padding-block: clamp(4rem, 11vw, 8rem) 0;
+  }
+  /* Alinha o conteúdo com o título da seção no computador. */
+  @media (min-width: 760px) {
+    .desloca {
+      padding-left: 12rem;
+    }
+  }
+  .pular {
+    position: absolute;
+    left: 1rem;
+    top: -10rem;
+    z-index: 10;
+    padding: 0.75rem 1rem;
+    background: var(--texto);
+    color: var(--fundo);
+  }
+  .pular:focus {
+    top: 1rem;
+  }
+  .faixa-exemplo {
+    padding: 0.55rem 1rem;
+    background: var(--texto);
+    color: var(--fundo);
+    font-size: 0.8rem;
+    text-align: center;
+  }
+</style>

@@ -1,0 +1,46 @@
+---
+// Nichos / para quem eu crio.
+import Cabecalho from './Cabecalho.astro';
+import { c } from '../lib/site';
+
+const { numero } = Astro.props as { numero: number };
+const nichos = c.nichos!;
+---
+
+<section class="secao recuo" id="nichos" aria-labelledby="nichos-titulo">
+  <Cabecalho numero={numero} titulo={nichos.titulo} id="nichos-titulo" />
+  <div class="desloca">
+    {nichos.texto && <p class="texto">{nichos.texto}</p>}
+    <ul class="lista">{nichos.lista.map((n) => <li>{n}</li>)}</ul>
+  </div>
+</section>
+
+<style>
+  .texto {
+    max-width: 34rem;
+    margin-bottom: 2rem;
+    font-size: 1.15rem;
+  }
+  .lista {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.15em 0.45em;
+    font-family: var(--f-titulo);
+    font-weight: var(--peso-titulo);
+    font-size: calc(clamp(2.1rem, 7.5vw, 4.4rem) * var(--escala));
+    letter-spacing: var(--espaco-titulo);
+    text-transform: var(--caixa-titulo);
+    line-height: 1.08;
+  }
+  .lista li:nth-child(even) {
+    font-style: var(--italico);
+    color: var(--destaque);
+  }
+  .lista li:not(:last-child)::after {
+    content: '/' / '';
+    margin-left: 0.45em;
+    color: var(--texto);
+    font-style: normal;
+    font-weight: 400;
+  }
+</style>

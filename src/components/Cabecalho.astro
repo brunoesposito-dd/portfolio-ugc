@@ -1,0 +1,41 @@
+---
+// Cabeçalho numerado das seções ("Nº 02 — Vídeos"), como um sumário de revista.
+interface Props {
+  numero: number;
+  titulo: string;
+  id: string;
+}
+const { numero, titulo, id } = Astro.props;
+---
+
+<header class="cabecalho">
+  <span class="numero">Nº {String(numero).padStart(2, '0')}</span>
+  <h2 id={id}>{titulo}</h2>
+</header>
+
+<style>
+  .cabecalho {
+    display: grid;
+    gap: 0.75rem;
+    margin-bottom: clamp(2rem, 6vw, 3.5rem);
+    padding-top: 0.9rem;
+    border-top: 1px solid var(--texto);
+  }
+  .numero {
+    font-family: var(--f-titulo);
+    font-style: var(--italico);
+    font-size: 1.05rem;
+  }
+  h2 {
+    font-size: calc(clamp(2.5rem, 9vw, 5.25rem) * var(--escala));
+  }
+  @media (min-width: 760px) {
+    .cabecalho {
+      grid-template-columns: 10rem 1fr;
+      column-gap: 2rem;
+    }
+    .numero {
+      padding-top: 0.5rem;
+    }
+  }
+</style>

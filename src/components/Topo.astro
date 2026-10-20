@@ -1,0 +1,119 @@
+---
+// Topo: nicho, nome, foto, bio e o botão principal de contato.
+import { Picture } from 'astro:assets';
+import { c, linkPrincipal } from '../lib/site';
+
+const [primeiro, ...resto] = c.topo.nome.trim().split(/\s+/);
+// O nome encolhe se tiver uma palavra muito comprida, para nunca sair da tela.
+const letras = Math.max(...c.topo.nome.split(/\s+/).map((p) => p.length), 4);
+---
+
+<header class="topo" style={`--letras:${letras}`}>
+  <div class="recuo barra">
+    <span class="kicker">Portfólio UGC</span>
+    <a class="kicker" href="#contato">Contato</a>
+  </div>
+  <div class="recuo capa">
+    <div class="titulo">
+      <p class="kicker">{c.topo.nicho}</p>
+      <h1>{primeiro}{resto.length > 0 && <em>{resto.join(' ')}</em>}</h1>
+    </div>
+    <figure class="foto">
+      <Picture
+        src={c.topo.foto}
+        alt={c.topo.fotoDescricao}
+        widths={[360, 540, 720, 1080]}
+        sizes="(min-width: 860px) 36vw, 82vw"
+        formats={['avif', 'webp']}
+        loading="eager"
+        fetchpriority="high"
+      />
+    </figure>
+    <div class="intro">
+      <p class="bio">{c.topo.bio}</p>
+      <a class="botao" href={linkPrincipal}>{c.topo.botao.texto} <span aria-hidden="true">→</span></a>
+    </div>
+  </div>
+</header>
+
+<style>
+  .barra {
+    display: flex;
+    justify-content: space-between;
+    padding-block: 1.1rem 0.9rem;
+    border-bottom: 1px solid var(--texto);
+  }
+  .barra a {
+    text-decoration: none;
+  }
+  .barra a:hover {
+    text-decoration: underline;
+  }
+  .capa {
+    display: grid;
+    gap: 2rem;
+    padding-top: clamp(2rem, 6vw, 4rem);
+  }
+  .titulo .kicker {
+    margin-bottom: 1rem;
+  }
+  h1 {
+    font-size: min(calc(clamp(4rem, 19vw, 10.5rem) * var(--escala)), calc((100vw - 3rem) / (var(--letras) * var(--letra))));
+    line-height: 0.88;
+    overflow-wrap: anywhere;
+  }
+  h1 em {
+    display: block;
+    font-style: var(--italico);
+    color: var(--destaque);
+  }
+  .foto {
+    position: relative;
+    width: 82%;
+    margin-bottom: 1rem;
+  }
+  .foto::before {
+    content: '';
+    position: absolute;
+    inset: 1rem -1rem -1rem 1rem;
+    border-radius: var(--raio);
+    background: var(--destaque);
+  }
+  .foto :global(img) {
+    position: relative;
+    width: 100%;
+    height: auto;
+    aspect-ratio: 4 / 5;
+    object-fit: cover;
+    border-radius: var(--raio);
+  }
+  .bio {
+    max-width: 34rem;
+    margin-bottom: 1.75rem;
+    font-size: 1.15rem;
+  }
+  @media (min-width: 860px) {
+    .capa {
+      grid-template-columns: 1.3fr 1fr;
+      grid-template-areas: 'titulo foto' 'intro foto';
+      column-gap: clamp(2rem, 5vw, 5rem);
+      align-items: end;
+    }
+    .titulo {
+      grid-area: titulo;
+    }
+    .foto {
+      grid-area: foto;
+      width: auto;
+      align-self: start;
+      margin-right: 1rem;
+    }
+    .intro {
+      grid-area: intro;
+      align-self: start;
+    }
+    h1 {
+      font-size: min(calc(clamp(4rem, 13vw, 11rem) * var(--escala)), calc(52vw / (var(--letras) * var(--letra))));
+    }
+  }
+</style>
