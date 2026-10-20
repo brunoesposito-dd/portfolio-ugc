@@ -122,6 +122,7 @@ Para voltar de `'r2'` para `'local'`, faça o caminho inverso: coloque os arquiv
 | WhatsApp, e-mail, Instagram, TikTok, mídia kit | `contato` (WhatsApp com 55 + DDD + número) |
 | Pacotes, preços e avulsos | `valores` (`pacotes` com `nome`, `detalhe`, `preco`, `descricao` e `etiqueta` opcional para destacar; `avulsos` com `nome` e `preco`). Preço vazio aparece como "Sob consulta". Nunca invente preço: use só o que ela informar |
 | Esconder os valores | `valores.mostrar: false` |
+| Logos das marcas | `marcas.lista` com `logo: 'arquivo.png'` (arquivo em `src/imagens`; PNG com fundo transparente fica melhor). Com logo, as marcas viram cartões brancos. Só marcas com quem ela trabalhou de verdade |
 | Título e descrição no Google | `seo` |
 | Endereço do site / domínio próprio | `endereco` |
 

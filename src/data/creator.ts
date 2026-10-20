@@ -142,6 +142,15 @@ export default defineCreator({
         autoral: true,
       },
       {
+        arquivo: 'exemplo-11-tutorial.mp4',
+        capa: 'exemplo-11-tutorial.jpg',
+        marca: 'Lumi Cosméticos (marca fictícia)',
+        formato: 'Tutorial',
+        nicho: 'Skincare',
+        duracao: '0:12',
+        autoral: false,
+      },
+      {
         arquivo: 'exemplo-02-rotina.mp4',
         capa: 'exemplo-02-rotina.jpg',
         marca: 'Casa Brisa (marca fictícia)',
@@ -157,6 +166,24 @@ export default defineCreator({
         formato: 'Antes e depois',
         nicho: 'Casa e organização',
         duracao: '0:09',
+        autoral: true,
+      },
+      {
+        arquivo: 'exemplo-12-unboxing.mp4',
+        capa: 'exemplo-12-unboxing.jpg',
+        marca: 'Casa Brisa (marca fictícia)',
+        formato: 'Unboxing',
+        nicho: 'Casa e organização',
+        duracao: '0:11',
+        autoral: false,
+      },
+      {
+        arquivo: 'exemplo-13-review.mp4',
+        capa: 'exemplo-13-review.jpg',
+        marca: 'Aromatizador de ambiente (comprado por mim)',
+        formato: 'Review',
+        nicho: 'Casa e organização',
+        duracao: '0:10',
         autoral: true,
       },
       {
@@ -178,6 +205,24 @@ export default defineCreator({
         autoral: false,
       },
       {
+        arquivo: 'exemplo-14-unboxing.mp4',
+        capa: 'exemplo-14-unboxing.jpg',
+        marca: 'Verde Vivo (marca fictícia)',
+        formato: 'Unboxing',
+        nicho: 'Café e cozinha',
+        duracao: '0:13',
+        autoral: false,
+      },
+      {
+        arquivo: 'exemplo-15-review.mp4',
+        capa: 'exemplo-15-review.jpg',
+        marca: 'Cafeteira (comprada por mim)',
+        formato: 'Review',
+        nicho: 'Café e cozinha',
+        duracao: '0:09',
+        autoral: true,
+      },
+      {
         arquivo: 'exemplo-04-tutorial.mp4',
         capa: 'exemplo-04-tutorial.jpg',
         marca: 'Pet Feliz (marca fictícia)',
@@ -195,6 +240,33 @@ export default defineCreator({
         nicho: 'Pets',
         duracao: '0:10',
         autoral: false,
+      },
+      {
+        arquivo: 'exemplo-16-unboxing.mp4',
+        capa: 'exemplo-16-unboxing.jpg',
+        marca: 'Pet Feliz (marca fictícia)',
+        formato: 'Unboxing',
+        nicho: 'Pets',
+        duracao: '0:12',
+        autoral: false,
+      },
+      {
+        arquivo: 'exemplo-17-rotina.mp4',
+        capa: 'exemplo-17-rotina.jpg',
+        marca: 'Nuvem Kids (marca fictícia)',
+        formato: 'Rotina',
+        nicho: 'Pets',
+        duracao: '0:14',
+        autoral: false,
+      },
+      {
+        arquivo: 'exemplo-18-antes-e-depois.mp4',
+        capa: 'exemplo-18-antes-e-depois.jpg',
+        marca: 'Caminha para gatos (comprada por mim)',
+        formato: 'Antes e depois',
+        nicho: 'Pets',
+        duracao: '0:10',
+        autoral: true,
       },
     ],
   },
@@ -233,15 +305,19 @@ export default defineCreator({
 
   // ── MARCAS COM QUEM JÁ TRABALHEI ───────────────────────────────────────────
   // Opcional. Só coloque marcas com quem você realmente trabalhou.
-  // Logo é opcional: coloque o arquivo em src/imagens e escreva o nome, ex.: logo: 'logo-lumi.png'.
+  // Logo é opcional: coloque o arquivo (PNG com fundo transparente fica melhor) em
+  // src/imagens e escreva o nome, ex.: logo: 'logo-lumi.png'. Com logo, as marcas aparecem
+  // em cartões brancos; sem logo, aparece o nome.
   marcas: {
     mostrar: true,
     titulo: 'Marcas com quem já trabalhei',
     lista: [
-      { nome: 'Lumi Cosméticos (fictícia)' },
-      { nome: 'Casa Brisa (fictícia)' },
-      { nome: 'Pet Feliz (fictícia)' },
-      { nome: 'Café Aurora (fictícia)' },
+      { nome: 'Lumi Cosméticos (marca fictícia)', logo: 'logo-lumi.png' },
+      { nome: 'Casa Brisa (marca fictícia)', logo: 'logo-casa-brisa.png' },
+      { nome: 'Pet Feliz (marca fictícia)', logo: 'logo-pet-feliz.png' },
+      { nome: 'Café Aurora (marca fictícia)', logo: 'logo-cafe-aurora.png' },
+      { nome: 'Verde Vivo (marca fictícia)', logo: 'logo-verde-vivo.png' },
+      { nome: 'Nuvem Kids (marca fictícia)', logo: 'logo-nuvem-kids.png' },
     ],
   },
 
