@@ -55,7 +55,7 @@ Copie um pedido, troque o que está entre [colchetes] e cole no Claude Code. Ele
     > Troca meus diferenciais por estes: [1. Roteiro incluso], [2. Entrega em 5 dias], [3. Duas rodadas de ajuste].
 
 15. **Como eu trabalho**
-    > Atualiza a seção "Como eu trabalho": prazo de [7 dias úteis], incluso [roteiro, edição e legenda], direitos de uso [6 meses para orgânico].
+    > Atualiza a seção "Como eu trabalho": prazo de [7 dias úteis], incluso [roteiro, edição e legenda], direitos de uso [orgânico vitalício e anúncios por até 4 meses].
 
     **Valores**
     > Atualiza meus valores: [1 vídeo + 2 fotos por R$ 350], [3 vídeos + 5 fotos por R$ 900, que é o mais pedido] e [5 vídeos + 8 fotos por R$ 1.400]. Avulsos: [foto por R$ 50].

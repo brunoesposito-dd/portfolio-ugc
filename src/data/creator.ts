@@ -354,7 +354,7 @@ export default defineCreator({
       'Duas rodadas de ajuste',
       'Arquivo sem legenda, se a marca pedir',
     ],
-    direitosDeUso: 'Uso orgânico nas redes da marca por 6 meses. Uso em anúncios é combinado à parte, por período.',
+    direitosDeUso: 'Uso orgânico vitalício nas redes da marca. Uso em anúncios pagos por até 4 meses, sem custo extra.',
     // Opcional: uma observação no fim da seção.
     observacao: 'Exclusividade, arquivos brutos e urgência são combinados à parte.',
   },
@@ -385,7 +385,7 @@ export default defineCreator({
     avulsos: [
       { nome: 'Foto de produto', preco: 'R$ 60' },
       { nome: 'Variação de gancho ou chamada', preco: 'R$ 80' },
-      { nome: 'Uso em anúncios por mais 3 meses', preco: 'R$ 150' },
+      { nome: 'Cada mês extra de uso em anúncios', preco: 'R$ 60' },
     ],
     // Texto do botão de cada pacote.
     botao: 'Quero este pacote',
