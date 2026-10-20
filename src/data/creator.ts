@@ -45,7 +45,7 @@ export default defineCreator({
   //   'revista' → creme e preto, ar de revista impressa
   //   'noite'   → escuro com verde-limão
   //   'rosa'    → rosa, ameixa e azul
-  //   'terra'   → verde-sálvia, verde-escuro e bronze
+  //   'terra'   → linho, marrom e verde-oliva, ar natural
   tema: 'revista',
 
   // Opcional: troca as cores do tema. Use o formato '#RRGGBB'.
