@@ -31,7 +31,7 @@ Este repositório é o portfólio de uma creator de UGC (conteúdo gerado por us
 | Vídeos prontos no modo `r2` | `videos-prontos/` (ela arrasta para o bucket na Cloudflare) |
 | Mídia kit em PDF (opcional) | `public/` (ex.: `public/midia-kit.pdf` → `midiaKit: 'midia-kit.pdf'`) |
 | Regras e mensagens de erro do conteúdo | `src/lib/schema.ts` |
-| Os 4 temas (cores, fontes) | `src/lib/temas.ts` |
+| Os 5 temas (cores, fontes) | `src/lib/temas.ts` |
 | Seções do site | `src/components/` (ordem das seções em `src/pages/index.astro`) |
 | Script de compressão de vídeo | `scripts/comprimir.mjs` (`npm run comprimir`) |
 
@@ -111,11 +111,11 @@ Para voltar de `'r2'` para `'local'`, faça o caminho inverso: coloque os arquiv
 | Trocar nome, bio, nicho, foto | `topo` |
 | Texto ou destino do botão principal | `topo.botao` (`abre: 'whatsapp' \| 'email' \| 'instagram'`) |
 | Esconder ou mostrar uma seção | `mostrar: false` / `true` na seção |
-| Trocar o visual | `tema: 'revista' \| 'noite' \| 'rosa' \| 'terra'` ("mais escuro" = `'noite'`) |
+| Trocar o visual | `tema: 'revista' \| 'noite' \| 'rosa' \| 'terra' \| 'alviverde'` ("mais escuro" = `'noite'`) |
 | Mudar uma cor | `cores: { fundo, texto, destaque }`, no formato `'#RRGGBB'`; o build avisa se ficar ilegível |
 | Campanha (Black Friday, Natal, Dia das Mães) | `campanha.nome`, `campanha.chamada`, `campanha.texto`; os vídeos entram com `campanha: '<mesmo nome>'` |
-| Cor do bloco da campanha | `campanha.cor` (padrão: preto; ex.: Natal `'#1F4D36'`). Nos temas `revista` e `terra`, o cabeçalho e o topo também ficam nessa cor enquanto a campanha estiver ligada |
-| Ver os 4 temas com o conteúdo dela | rode `npm run dev` e passe os links `http://localhost:4321/temas/revista/`, `/temas/noite/`, `/temas/rosa/` e `/temas/terra/` |
+| Cor do bloco da campanha | `campanha.cor` (padrão: preto; ex.: Natal `'#1F4D36'`). Nos temas `revista`, `terra` e `alviverde`, o cabeçalho e o topo também ficam nessa cor enquanto a campanha estiver ligada (no `alviverde`, sem campanha, eles ficam verdes) |
+| Ver os 5 temas com o conteúdo dela | rode `npm run dev` e passe os links `http://localhost:4321/temas/revista/`, `/temas/noite/`, `/temas/rosa/`, `/temas/terra/` e `/temas/alviverde/` |
 | Desligar a campanha | `campanha.mostrar: false` (os vídeos dela voltam para a grade) |
 | Vídeos parados até tocar | `videos.previaAutomatica: false` |
 | Organizar os vídeos por nicho | campo `nicho` em cada vídeo. Com 2 nichos ou mais, os vídeos aparecem separados por nicho (todos abertos, um bloco embaixo do outro) e com atalhos no alto da seção. A ordem dos nichos é a ordem em que aparecem na lista |

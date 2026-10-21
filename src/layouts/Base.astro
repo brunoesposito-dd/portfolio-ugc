@@ -11,7 +11,7 @@ interface Props {
   indexar?: boolean;
 }
 const { visual = visualPadrao, indexar = true } = Astro.props;
-const { paleta, tema, fontes, escuro, campanha, topoNaCampanha } = visual;
+const { paleta, tema, fontes, escuro, campanha, topo } = visual;
 
 // Sem endereço configurado (ex.: no computador), usa o endereço de onde a página está sendo vista.
 const base = endereco || Astro.url.origin;
@@ -27,6 +27,7 @@ const variaveis = {
   '--campanha-texto': campanha.texto,
   '--campanha-suave': campanha.suave,
   '--campanha-linha': campanha.linha,
+  ...(topo && { '--topo-fundo': topo.fundo, '--topo-texto': topo.texto, '--topo-suave': topo.suave, '--topo-linha': topo.linha }),
   '--f-titulo': `var(${fontes.titulo.variavel})`,
   '--f-corpo': `var(${fontes.corpo.variavel})`,
   '--peso-titulo': tema.peso,
@@ -57,11 +58,11 @@ const pessoa = {
   ...(perfis.length > 0 && { sameAs: perfis }),
   ...(nichosDosVideos.length > 0 && { knowsAbout: nichosDosVideos }),
 };
-const nomesDosTemas: Record<string, string> = { revista: 'Revista', noite: 'Noite', rosa: 'Rosa', terra: 'Terra' };
+const nomesDosTemas: Record<string, string> = { revista: 'Revista', noite: 'Noite', rosa: 'Rosa', terra: 'Terra', alviverde: 'Alviverde' };
 ---
 
 <!doctype html>
-<html lang="pt-BR" style={estilo} class:list={[{ 'topo-na-campanha': topoNaCampanha }]}>
+<html lang="pt-BR" style={estilo} data-tema={visual.nome} class:list={[{ 'topo-colorido': topo }]}>
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -69,7 +70,7 @@ const nomesDosTemas: Record<string, string> = { revista: 'Revista', noite: 'Noit
     <meta name="description" content={descricaoDaPagina} />
     {!indexar && <meta name="robots" content="noindex" />}
     <link rel="canonical" href={`${base}/`} />
-    <meta name="theme-color" content={topoNaCampanha ? campanha.fundo : paleta.fundo} />
+    <meta name="theme-color" content={topo?.fundo ?? paleta.fundo} />
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
 
@@ -187,25 +188,34 @@ const nomesDosTemas: Record<string, string> = { revista: 'Revista', noite: 'Noit
     scroll-margin-top: 5rem;
   }
 
-  /* Campanha ligada num tema com topoNaCampanha: cabeçalho e topo trocam para as cores da
-     campanha. Como tudo usa as mesmas variáveis, basta trocá-las aqui. */
-  html.topo-na-campanha .barra,
-  html.topo-na-campanha .topo {
-    --fundo: var(--campanha-fundo);
-    --texto: var(--campanha-texto);
-    --destaque: var(--campanha-texto);
-    --no-destaque: var(--campanha-fundo);
-    --suave: var(--campanha-suave);
-    --linha: var(--campanha-linha);
+  /* Tema com topoNaCampanha (e campanha ligada) ou com corDoTopo: cabeçalho e topo trocam de
+     cor. Como tudo usa as mesmas variáveis, basta trocá-las aqui. */
+  html.topo-colorido .barra,
+  html.topo-colorido .topo {
+    --fundo: var(--topo-fundo);
+    --texto: var(--topo-texto);
+    --destaque: var(--topo-texto);
+    --no-destaque: var(--topo-fundo);
+    --suave: var(--topo-suave);
+    --linha: var(--topo-linha);
     background: var(--fundo);
     color: var(--texto);
   }
-  html.topo-na-campanha .topo {
+  html.topo-colorido .topo {
     padding-bottom: clamp(3rem, 7vw, 5rem);
   }
-  html.topo-na-campanha .campanha {
+  html.topo-colorido .campanha {
     margin-top: 0;
     border-top: 1px solid var(--campanha-linha);
+  }
+
+  /* Alviverde: luz de estádio no topo verde e um fio dourado embaixo dele. */
+  html[data-tema='alviverde'] .topo {
+    background:
+      radial-gradient(60rem 30rem at 85% -10%, rgb(255 255 255 / 0.14), transparent 70%),
+      radial-gradient(40rem 30rem at 0% 110%, rgb(0 0 0 / 0.22), transparent 70%),
+      var(--fundo);
+    border-bottom: 4px solid #c9a956;
   }
 
   /* Peças usadas em várias seções */

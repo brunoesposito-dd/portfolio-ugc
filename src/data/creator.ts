@@ -40,13 +40,14 @@ export default defineCreator({
   // Ex.: 'https://pub-1234567890abcdef.r2.dev'
   urlDosVideos: 'https://pub-SEU-BUCKET.r2.dev',
 
-  // Visual do site. Para comparar, a faixa de demonstração no topo do site tem links para os 4.
+  // Visual do site. Para comparar, a faixa de demonstração no topo do site tem links para os 5.
   // Opções:
-  //   'revista' → creme e preto, ar de revista impressa
-  //   'noite'   → quase preto com rosa-blush, ar de revista de moda
-  //   'rosa'    → tons de rosa com ameixa
-  //   'terra'   → linho, marrom e verde-oliva, ar natural
-  tema: 'revista',
+  //   'revista'   → creme e preto, ar de revista impressa
+  //   'noite'     → quase preto com rosa-blush, ar de revista de moda
+  //   'rosa'      → tons de rosa com ameixa
+  //   'terra'     → linho, marrom e verde-oliva, ar natural
+  //   'alviverde' → verde e branco de time de futebol, topo verde com fio dourado
+  tema: 'alviverde',
 
   // Opcional: troca as cores do tema. Use o formato '#RRGGBB'.
   // O build confere se o texto continua fácil de ler (contraste) e avisa se não estiver.
@@ -275,7 +276,7 @@ export default defineCreator({
   // Bloco de destaque logo abaixo do topo, com os vídeos marcados com
   // `campanha: 'Black Friday'` (ou o nome que estiver em `nome`).
   // Troque o nome para 'Natal', 'Dia das Mães' etc. Para esconder: mostrar: false.
-  // Enquanto estiver ligada, aparece uma faixa no alto do site; nos temas 'revista' e 'terra', o topo
+  // Enquanto estiver ligada, aparece uma faixa no alto do site; nos temas 'revista', 'terra' e 'alviverde', o topo
   // inteiro também fica na cor da campanha (preto, ou a cor escolhida em `cor`).
   campanha: {
     mostrar: true,

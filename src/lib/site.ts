@@ -27,26 +27,24 @@ export function visualDoTema(nome: NomeTema, cores: Partial<Record<'fundo' | 'te
   const tema = TEMAS[nome];
   const { paleta, problemas } = montarPaleta({ fundo: tema.fundo, texto: tema.texto, destaque: tema.destaque, ...cores });
   const escuro = contraste(paleta.fundo, '#000000') < contraste(paleta.fundo, '#FFFFFF');
+  // Texto, texto secundário e linhas sobre um fundo colorido, todos passando em 4,5:1.
+  const coresSobre = (fundo: string) => {
+    const texto = [paleta.fundo, paleta.texto, '#FFFFFF', '#000000'].find((cor) => contraste(cor, fundo) >= 4.5)!;
+    const suave = [0.65, 0.75, 0.85, 1].map((peso) => misturar(texto, fundo, peso)).find((cor) => contraste(cor, fundo) >= 4.5) ?? texto;
+    return { fundo, texto, suave, linha: misturar(texto, fundo, 0.25) };
+  };
   // Bloco da campanha: preto por padrão (combina com Black Friday), ou a cor escolhida em campanha.cor.
   // Num tema escuro, ganha um pouco da cor de destaque para se separar da página.
-  const fundoDaCampanha = c.campanha?.cor ?? (escuro ? misturar(paleta.destaque, paleta.fundo, 0.14) : '#111111');
-  const textoDaCampanha = [paleta.fundo, paleta.texto, '#FFFFFF', '#000000'].find((cor) => contraste(cor, fundoDaCampanha) >= 4.5)!;
-  // Texto secundário sobre a cor da campanha: o mais suave que ainda passe em 4,5:1.
-  const suaveDaCampanha =
-    [0.65, 0.75, 0.85, 1].map((peso) => misturar(textoDaCampanha, fundoDaCampanha, peso)).find((cor) => contraste(cor, fundoDaCampanha) >= 4.5) ??
-    textoDaCampanha;
+  const campanha = coresSobre(c.campanha?.cor ?? tema.corDoTopo ?? (escuro ? misturar(paleta.destaque, paleta.fundo, 0.14) : '#111111'));
+  const corDoTopo = tema.topoNaCampanha && c.campanha?.mostrar ? campanha.fundo : tema.corDoTopo;
   return {
     nome,
     tema,
     paleta,
     escuro,
-    campanha: {
-      fundo: fundoDaCampanha,
-      texto: textoDaCampanha,
-      suave: suaveDaCampanha,
-      linha: misturar(textoDaCampanha, fundoDaCampanha, 0.25),
-    },
-    topoNaCampanha: tema.topoNaCampanha && !!c.campanha?.mostrar,
+    campanha,
+    /** Cores do cabeçalho e do topo, quando não seguem o fundo da página. */
+    topo: corDoTopo ? coresSobre(corDoTopo) : undefined,
     fontes: {
       titulo: { ...FONTES[tema.titulo], variavel: variavelDaFonte(tema.titulo) },
       corpo: { ...FONTES[tema.corpo], variavel: variavelDaFonte(tema.corpo) },
