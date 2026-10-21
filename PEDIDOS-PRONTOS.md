@@ -36,7 +36,7 @@ Copie um pedido, troque o que está entre [colchetes] e cole no Claude Code. Ele
 ## Visual
 
 10. **Tema**
-    > Me mostra o meu portfólio nos 4 temas para eu escolher.
+    > Me mostra o meu portfólio nos 5 temas para eu escolher.
 
     > Muda o tema para um mais escuro. Me mostra como ficou antes de publicar.
 

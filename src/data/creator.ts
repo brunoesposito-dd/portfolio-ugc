@@ -19,8 +19,9 @@ export default defineCreator({
   // ── AJUSTES GERAIS ─────────────────────────────────────────────────────────
 
   // true mostra uma faixa no topo avisando que o portfólio é de demonstração,
-  // com pessoa, marcas e números fictícios. Mude para false quando todo o
-  // conteúdo de exemplo tiver sido trocado pelo seu.
+  // com pessoa, marcas e números fictícios. Só serve para o modelo: antes de
+  // publicar com o seu nome, tire o que sobrou de exemplo e mude para false
+  // (o build não publica o site com o seu nome e esta faixa ligada).
   modoExemplo: true,
 
   // Endereço do site, ex.: 'https://portfolio-ugc.seunome.workers.dev' ou, com domínio

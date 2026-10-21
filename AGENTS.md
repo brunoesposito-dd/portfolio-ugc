@@ -15,10 +15,10 @@ Este repositório é o portfólio de uma creator de UGC (conteúdo gerado por us
 1. **Para personalizar, edite só `src/data/creator.ts`.** Textos, links, vídeos, cores, tema e seções ligadas/desligadas estão todos lá, com comentários explicando cada campo. Só mexa em componentes (`src/components/`), no layout ou nos temas se ela pedir uma mudança visual que o arquivo de conteúdo não cobre. Nesse caso, explique antes o que vai mudar.
 2. **Nunca invente marca, número, resultado, depoimento ou trabalho.** Só coloque o que ela disser. Se faltar informação, pergunte. Na dúvida, deixe de fora.
 3. **Vídeo gravado sem contrato com a marca sempre leva `autoral: true`.** Isso mostra o selo "Conteúdo autoral" e evita que pareça trabalho pago. Se ela não disser se foi pago, pergunte.
-4. **Sempre rode `npm run build` antes de publicar** e corrija qualquer erro antes do push. Nunca publique com o build quebrado.
+4. **Sempre rode `npm run build` e as revisões de código e de segurança antes de publicar** (passo 5 de "Como publicar") e corrija qualquer erro antes do push. Nunca publique com o build quebrado.
 5. Nunca coloque no GitHub os vídeos originais (pasta `videos-originais/`, já está no `.gitignore`) nem arquivos com mais de 24 MB.
 6. Antes de apagar algo dela (vídeo, foto, seção inteira), confirme.
-7. Não mude o `modoExemplo` para `false` enquanto ainda houver conteúdo de exemplo (Bia Exemplo, marcas e números "fictícios"). Quando tudo for dela, mude e avise.
+7. **O site dela nunca vai ao ar com a faixa "Portfólio de demonstração"** (`modoExemplo: true`). A faixa diz que a creator, as marcas e os números são fictícios: só serve para o modelo com a Bia Exemplo. Assim que o topo tiver o nome dela, antes de publicar, tire tudo o que ainda for de exemplo (marcas, números, prints, depoimentos e vídeos "fictícios" ou "de exemplo", valores de exemplo), mostre a ela em uma lista curta o que vai sair, mude `modoExemplo` para `false` e avise. Nunca desligue a faixa deixando conteúdo de exemplo no site: aí ele pareceria trabalho real dela. O build barra a publicação com o nome dela e a faixa ligada.
 
 ## Mapa do projeto
 
@@ -61,8 +61,11 @@ Resuma em uma ou duas frases ("Está tudo pronto" ou "Instalei o ffmpeg; feche e
 2. Rode `npm run build`. Se der erro, leia a mensagem (ela vem em português e diz o lugar exato), corrija e rode de novo.
 3. Se ela quiser ver antes de publicar: rode `npm run dev` e passe o link `http://localhost:4321`. Fora de um terminal interativo, o Astro já sobe o servidor em segundo plano. Quando terminar, pare com `npx astro dev stop`. Se o servidor continuar mostrando um erro de vídeo que já foi resolvido (ex.: o arquivo chegou depois em `public/videos`), pare e suba de novo.
 4. `git add -A`, depois `git status` para conferir que não entrou nada estranho (vídeo original, arquivo gigante). Faça o commit com uma mensagem curta em português dizendo o que mudou (ex.: "Troca a bio e adiciona vídeo da Lumi").
-5. `git push`.
-6. Avise: "Pronto! Em 1 a 2 minutos o site atualiza sozinho." A Cloudflare monta e publica o site sozinha a cada push.
+5. **Revisão antes de publicar (sempre, em toda publicação):** rode a skill `code-review` e depois a `security-review`. As duas olham o que mudou desde a última publicação (os commits que ainda não foram para o GitHub), então rode depois do commit. Espere as duas terminarem. Corrija o que for problema de verdade, faça um novo commit e rode o build de novo. Não peça para ela decidir sobre achados técnicos; conte em uma frase se corrigiu algo.
+   - Se a `security-review` falhar com `ambiguous argument`, rode `git remote set-head origin -a` e tente de novo.
+   - Em um assistente sem essas duas skills (Codex, Cursor), faça você mesmo a revisão do `git diff origin/main`, procurando erro que quebre o site e risco de segurança: senha, token ou chave no código, script ou link de site desconhecido, arquivo pessoal que não devia ir para o GitHub.
+6. `git push`.
+7. Avise: "Pronto! Em 1 a 2 minutos o site atualiza sozinho." A Cloudflare monta e publica o site sozinha a cada push.
 
 O site fica num **Worker** da Cloudflare (não em Pages; o passo a passo está no `README.md`, Passo 3). O `wrangler.jsonc` diz onde está o site pronto (`dist`), e o `name` dele precisa ser igual ao nome do projeto no painel: se ela usar outro nome, troque o `name`, senão a publicação falha com "must match the name of your Worker". O `worker.js` entrega os vídeos em pedaços, que é o que o Safari do iPhone exige para tocar; não apague. A Cloudflare não informa o endereço do site durante o build, então `endereco` em `src/data/creator.ts` precisa ter o endereço dela (ex.: `https://portfolio-ugc.SEU-SUBDOMINIO.workers.dev`); sem ele, a prévia do link no WhatsApp fica sem imagem. O modelo vem com o endereço do site de demonstração (`portfolio-ugc.bruno-esposito.workers.dev`): troque pelo dela assim que o site dela estiver no ar.
 

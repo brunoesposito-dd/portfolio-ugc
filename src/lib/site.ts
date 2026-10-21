@@ -167,6 +167,12 @@ async function conferirNoR2() {
     );
 }
 
+// O site com o nome dela não pode ir ao ar dizendo que a creator e as marcas são fictícias.
+// Só no build: no "npm run dev" ela ainda pode ver o site pela metade.
+if (import.meta.env.PROD && c.modoExemplo && c.topo.nome !== 'Bia Exemplo')
+  throw new ProblemasNoConteudo([
+    `Modo exemplo: o site já está com o nome "${c.topo.nome}", mas ainda mostra a faixa "Portfólio de demonstração", que diz que a creator, as marcas e os números são fictícios. Antes de publicar, tire o que ainda for de exemplo (marcas, números, prints, depoimentos e vídeos fictícios, valores de exemplo) e mude modoExemplo para false.`,
+  ]);
 conferirPastaPublic();
 if (c.modoDosVideos === 'local') conferirNaPasta();
 else await conferirNoR2();

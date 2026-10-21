@@ -2,7 +2,7 @@
 
 Modelo de portfólio para creators de UGC, feito para a mentoria **Destrava UGC**. Você não precisa saber programar: tudo é feito conversando em português com o Claude Code, que faz as mudanças e publica o site para você.
 
-O site já vem pronto com uma creator fictícia (a "Bia Exemplo"), todas as seções funcionando e 4 visuais para escolher: **Revista**, **Noite**, **Rosa** e **Terra**. Enquanto o site estiver em modo de demonstração, a faixa no topo tem links para ver o mesmo portfólio em cada visual. Você troca o conteúdo pelo seu e pronto.
+O site já vem pronto com uma creator fictícia (a "Bia Exemplo"), todas as seções funcionando e 5 visuais para escolher: **Revista**, **Noite**, **Rosa**, **Terra** e **Alviverde**. Enquanto o site estiver em modo de demonstração, a faixa no topo tem links para ver o mesmo portfólio em cada visual. Você troca o conteúdo pelo seu e pronto.
 
 **O que tem no site:** topo com sua foto e bio, vídeos verticais separados por nicho, bloco de campanha (Black Friday, Natal...), diferenciais, marcas, resultados, como você trabalha, pacotes com valores (cada um com botão direto para o seu WhatsApp) e contato. Abre rápido no celular, que é onde as marcas olham.
 
@@ -77,7 +77,7 @@ Agora é só pedir. O arquivo [PEDIDOS-PRONTOS.md](PEDIDOS-PRONTOS.md) tem uma l
 
 Cada vez que o Claude Code publica, o site atualiza sozinho em 1 a 2 minutos.
 
-Quando todo o conteúdo de exemplo tiver sido trocado pelo seu, peça:
+**O seu site nunca vai ao ar com a faixa "Portfólio de demonstração".** Ela diz que a creator, as marcas e os números são fictícios, então só serve para o modelo. Quando o site já estiver com o seu nome, o Claude Code tira o que sobrou de exemplo (mostrando antes o que vai sair) e desliga a faixa antes de publicar. Se quiser fazer isso de uma vez, peça:
 
 > Tira todo o conteúdo de exemplo que ainda sobrou e desliga a faixa de "portfólio de demonstração".
 
