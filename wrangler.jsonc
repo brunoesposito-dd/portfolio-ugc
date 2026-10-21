@@ -3,7 +3,9 @@
 {
   "name": "portfolio-ugc",
   "compatibility_date": "2026-10-01",
-  "assets": { "directory": "./dist" },
+  // Só os vídeos passam pelo worker.js (para tocarem no iPhone); o resto do site vai direto.
+  "main": "worker.js",
+  "assets": { "directory": "./dist", "binding": "ASSETS", "run_worker_first": ["/videos/*"] },
   // Liga o endereço público nome-do-projeto.SUBDOMINIO.workers.dev.
   "workers_dev": true
 }
