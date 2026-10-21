@@ -90,6 +90,15 @@ export default defineCreator({
     previaAutomatica: true,
     lista: [
       {
+        arquivo: '116062710-larisis-queiroz-sandalia-marrom-salto-taca-tiras-lancamento-01-v2.mp4',
+        capa: '116062710-larisis-queiroz-sandalia-marrom-salto-taca-tiras-lancamento-01-v2.jpg',
+        marca: 'Domidona',
+        formato: 'Look do dia',
+        nicho: 'Moda',
+        duracao: '0:25',
+        autoral: false,
+      },
+      {
         // Nome do arquivo do vídeo (o que o "npm run comprimir" gerou).
         arquivo: 'exemplo-01-unboxing.mp4',
         // Capa (imagem mostrada antes de tocar). Se não preencher, usa o mesmo
