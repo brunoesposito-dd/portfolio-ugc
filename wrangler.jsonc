@@ -3,5 +3,7 @@
 {
   "name": "portfolio-ugc",
   "compatibility_date": "2026-10-01",
-  "assets": { "directory": "./dist" }
+  "assets": { "directory": "./dist" },
+  // Liga o endereço público nome-do-projeto.SUBDOMINIO.workers.dev.
+  "workers_dev": true
 }

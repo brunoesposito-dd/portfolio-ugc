@@ -26,7 +26,7 @@ export default defineCreator({
   // Endereço do site. Pode deixar vazio: na Cloudflare o site descobre sozinho
   // (fica algo como https://nome-do-projeto.pages.dev). Só preencha se tiver
   // domínio próprio, ex.: 'https://www.seunome.com.br'.
-  endereco: '',
+  endereco: 'https://portfolio-ugc.bruno-esposito.workers.dev',
 
   // Onde ficam os vídeos e as capas:
   //   'local' → na pasta public/videos, junto com o site. Não precisa de cartão nem de
