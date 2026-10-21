@@ -64,6 +64,8 @@ Resuma em uma ou duas frases ("Está tudo pronto" ou "Instalei o ffmpeg; feche e
 5. `git push`.
 6. Avise: "Pronto! Em 1 a 2 minutos o site atualiza sozinho." A Cloudflare Pages monta e publica o site sozinha a cada push.
 
+Se o projeto na Cloudflare foi criado como **Worker** (e não Pages), o `wrangler.jsonc` já diz onde está o site pronto (`dist`), e o `name` dele precisa ser igual ao nome do projeto no painel. Num Worker a Cloudflare não informa o endereço do site, então preencha `endereco` em `src/data/creator.ts` (ex.: `https://portfolio-ugc.SEU-SUBDOMINIO.workers.dev`); sem ele, a prévia do link no WhatsApp fica sem imagem.
+
 ## Vídeos
 
 ### Os dois modos (`modoDosVideos` em `src/data/creator.ts`)

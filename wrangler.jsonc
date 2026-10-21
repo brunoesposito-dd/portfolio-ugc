@@ -1,0 +1,7 @@
+// Configuração para publicar como Worker na Cloudflare (Workers & Pages > Worker).
+// "name" precisa ser igual ao nome do projeto no painel. Numa Cloudflare Pages, este arquivo é ignorado.
+{
+  "name": "portfolio-ugc",
+  "compatibility_date": "2026-10-01",
+  "assets": { "directory": "./dist" }
+}
