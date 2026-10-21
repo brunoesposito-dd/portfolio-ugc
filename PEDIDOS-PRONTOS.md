@@ -7,6 +7,8 @@ Copie um pedido, troque o que está entre [colchetes] e cole no Claude Code. Ele
 1. **Checagem inicial**
    > É a primeira vez que uso este projeto. Faz a checagem inicial e me diz se falta alguma coisa no meu computador.
 
+Os pedidos 2 a 5 (nome, bio, foto e contatos) podem ir numa mensagem só. O site só é publicado com o seu nome quando esses quatro forem seus, para nunca aparecer o seu nome com a bio ou o WhatsApp da Bia Exemplo.
+
 2. **Nome e nicho**
    > Troca meu nome para [Seu Nome] e meu nicho para [skincare, maternidade e casa].
 

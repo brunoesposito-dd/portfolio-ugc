@@ -167,12 +167,21 @@ async function conferirNoR2() {
     );
 }
 
-// O site com o nome dela não pode ir ao ar dizendo que a creator e as marcas são fictícias.
-// Só no build: no "npm run dev" ela ainda pode ver o site pela metade.
-if (import.meta.env.PROD && c.modoExemplo && c.topo.nome !== 'Bia Exemplo')
-  throw new ProblemasNoConteudo([
-    `Modo exemplo: o site já está com o nome "${c.topo.nome}", mas ainda mostra a faixa "Portfólio de demonstração", que diz que a creator, as marcas e os números são fictícios. Antes de publicar, tire o que ainda for de exemplo (marcas, números, prints, depoimentos e vídeos fictícios, valores de exemplo) e mude modoExemplo para false.`,
-  ]);
+// O site dela não vai ao ar com a faixa dizendo que tudo é fictício, nem sem a faixa com sobra
+// de exemplo (pareceria trabalho real dela). Só no build: no "npm run dev" ela vê o site pela metade.
+if (import.meta.env.PROD) {
+  if (c.modoExemplo && c.topo.nome !== 'Bia Exemplo')
+    throw new ProblemasNoConteudo([
+      `Modo exemplo: o site já está com o nome "${c.topo.nome}", mas ainda mostra a faixa "Portfólio de demonstração", que diz que a creator, as marcas e os números são fictícios. Antes de publicar, tire o que ainda for de exemplo (marcas, números, prints, depoimentos e vídeos fictícios, valores de exemplo) e mude modoExemplo para false.`,
+    ]);
+  // ponytail: procura as marcas que o conteúdo de exemplo traz ("fictícia", "de exemplo", vídeos
+  // exemplo-NN, contatos de mentira); texto de exemplo sem essas marcas passa.
+  const sobras = c.modoExemplo ? [] : [...JSON.stringify(c).matchAll(/"([^"]*(?:fict[ií]ci|de exemplo|exemplo-\d|example\.com|900000000)[^"]*)"/gi)];
+  if (sobras.length)
+    throw new ProblemasNoConteudo(
+      sobras.map(([, texto]) => `Conteúdo de exemplo: "${texto}" continua no site, e a faixa de demonstração está desligada. Troque pelo conteúdo real dela ou apague.`),
+    );
+}
 conferirPastaPublic();
 if (c.modoDosVideos === 'local') conferirNaPasta();
 else await conferirNoR2();
