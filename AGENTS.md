@@ -62,15 +62,15 @@ Resuma em uma ou duas frases ("Está tudo pronto" ou "Instalei o ffmpeg; feche e
 3. Se ela quiser ver antes de publicar: rode `npm run dev` e passe o link `http://localhost:4321`. Fora de um terminal interativo, o Astro já sobe o servidor em segundo plano. Quando terminar, pare com `npx astro dev stop`. Se o servidor continuar mostrando um erro de vídeo que já foi resolvido (ex.: o arquivo chegou depois em `public/videos`), pare e suba de novo.
 4. `git add -A`, depois `git status` para conferir que não entrou nada estranho (vídeo original, arquivo gigante). Faça o commit com uma mensagem curta em português dizendo o que mudou (ex.: "Troca a bio e adiciona vídeo da Lumi").
 5. `git push`.
-6. Avise: "Pronto! Em 1 a 2 minutos o site atualiza sozinho." A Cloudflare Pages monta e publica o site sozinha a cada push.
+6. Avise: "Pronto! Em 1 a 2 minutos o site atualiza sozinho." A Cloudflare monta e publica o site sozinha a cada push.
 
-Se o projeto na Cloudflare foi criado como **Worker** (e não Pages), o `wrangler.jsonc` já diz onde está o site pronto (`dist`), e o `name` dele precisa ser igual ao nome do projeto no painel. O `worker.js` entrega os vídeos em pedaços, que é o que o Safari do iPhone exige para tocar; não apague. Num Worker a Cloudflare não informa o endereço do site, então preencha `endereco` em `src/data/creator.ts` (ex.: `https://portfolio-ugc.SEU-SUBDOMINIO.workers.dev`); sem ele, a prévia do link no WhatsApp fica sem imagem.
+O site fica num **Worker** da Cloudflare (não em Pages; o passo a passo está no `README.md`, Passo 3). O `wrangler.jsonc` diz onde está o site pronto (`dist`), e o `name` dele precisa ser igual ao nome do projeto no painel: se ela usar outro nome, troque o `name`, senão a publicação falha com "must match the name of your Worker". O `worker.js` entrega os vídeos em pedaços, que é o que o Safari do iPhone exige para tocar; não apague. A Cloudflare não informa o endereço do site durante o build, então `endereco` em `src/data/creator.ts` precisa ter o endereço dela (ex.: `https://portfolio-ugc.SEU-SUBDOMINIO.workers.dev`); sem ele, a prévia do link no WhatsApp fica sem imagem. O modelo vem com o endereço do site de demonstração (`portfolio-ugc.bruno-esposito.workers.dev`): troque pelo dela assim que o site dela estiver no ar.
 
 ## Vídeos
 
 ### Os dois modos (`modoDosVideos` em `src/data/creator.ts`)
 
-- **`'local'`** (padrão): os vídeos e as capas ficam em `public/videos/` e são publicados junto com o site. Não precisa de bucket nem de cartão de crédito. Limite: **24 MB por arquivo** (a Cloudflare Pages recusa arquivos acima de 25 MB). O build barra qualquer arquivo em `public/` acima de 24 MB, e o `npm run comprimir` já mira abaixo disso.
+- **`'local'`** (padrão): os vídeos e as capas ficam em `public/videos/` e são publicados junto com o site. Não precisa de bucket nem de cartão de crédito. Limite: **24 MB por arquivo** (a Cloudflare recusa arquivos acima de 25 MB). O build barra qualquer arquivo em `public/` acima de 24 MB, e o `npm run comprimir` já mira abaixo disso.
 - **`'r2'`**: os vídeos e as capas ficam num bucket do Cloudflare R2 (um "HD na nuvem" da Cloudflare). Sem limite prático de tamanho e o repositório fica leve. Precisa ativar o R2 (a Cloudflare pede um cartão, mesmo no plano gratuito) e preencher `urlDosVideos`. O build confere no bucket se cada vídeo e cada capa existem.
 
 ### Adicionar um vídeo novo

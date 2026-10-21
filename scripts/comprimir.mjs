@@ -15,7 +15,7 @@ const conteudo = existsSync('src/data/creator.ts') ? readFileSync('src/data/crea
 const MODO = /^\s*modoDosVideos:\s*['"]r2['"]/m.test(conteudo) ? 'r2' : 'local';
 const ORIGEM = 'videos-originais';
 const DESTINO = MODO === 'local' ? 'public/videos' : 'videos-prontos';
-// A Cloudflare Pages não publica arquivo acima de 25 MB. O build barra acima de 24 MB;
+// A Cloudflare não publica arquivo acima de 25 MB. O build barra acima de 24 MB;
 // aqui miramos em 22 MB para sobrar folga.
 const LIMITE = 24 * 1024 * 1024;
 const ALVO = 22 * 1024 * 1024;

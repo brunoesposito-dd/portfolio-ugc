@@ -42,21 +42,26 @@ Pronto: agora você tem uma cópia só sua. Copie o endereço da página que abr
 
 Ele confere se está tudo instalado (Node, git, ffmpeg, login no GitHub) e resolve com você o que faltar.
 
-## Passo 3: colocar o site no ar com a Cloudflare Pages
+## Passo 3: colocar o site no ar com a Cloudflare
+
+O site fica num **Worker** da Cloudflare (não use **Pages**: este modelo é feito para Workers).
 
 1. Entre em https://dash.cloudflare.com.
 2. No menu da esquerda, abra **Workers & Pages**.
-3. Clique em **Create application**, escolha **Pages** e depois **Connect to Git**. Em algumas telas o botão aparece como **Import an existing Git repository**.
-   - A Cloudflare pode sugerir usar "Workers" em vez de Pages. Para este modelo, escolha **Pages**.
-4. Escolha **GitHub** e clique em **Install & Authorize**. Você pode liberar o acesso só ao repositório `portfolio`.
-5. Selecione o repositório e clique em **Begin setup**.
-6. Na tela **Set up builds and deployments**:
-   - **Project name**: vira o endereço do site. Se escolher `bia-ugc`, o site fica em `https://bia-ugc.pages.dev`.
-   - **Production branch**: `main`.
-   - **Framework preset**: escolha **Astro**. Ele preenche sozinho o **Build command** (`npm run build`) e o **Build output directory** (`dist`). Confira se ficou assim.
-7. Clique em **Save and Deploy** e espere de 1 a 2 minutos. Quando aparecer **Success**, o site está no ar.
+3. Clique em **Create application** e escolha **Import a repository** (importar um repositório).
+4. Escolha **GitHub** e autorize o acesso. Você pode liberar o acesso só ao repositório `portfolio`.
+5. Selecione o repositório e siga para a tela de configuração.
+6. Preencha:
+   - **Project name**: `portfolio-ugc`. Precisa ser igual ao nome que já vem no projeto, senão a publicação dá erro. O site fica em `https://portfolio-ugc.SEU-SUBDOMINIO.workers.dev` (a Cloudflare cria o `SEU-SUBDOMINIO` a partir da sua conta; se ela pedir para você escolher, use algo curto, como o seu nome).
+     - Quer outro nome? Antes de seguir, peça ao Claude Code:
+       > Troca o nome do projeto na Cloudflare para bia-ugc e publica.
+
+       e escreva o mesmo nome aqui.
+   - **Build command**: `npm run build`.
+   - **Deploy command**: deixe como está (`npx wrangler deploy`).
+7. Clique em **Deploy** (pode aparecer como **Save and Deploy**) e espere de 1 a 2 minutos. Quando terminar, o endereço do site (terminado em `.workers.dev`) aparece na página do projeto.
 8. Conte o endereço para o Claude Code:
-   > Meu site ficou no ar em https://bia-ugc.pages.dev. Guarda esse endereço.
+   > Meu site ficou no ar em https://portfolio-ugc.bia.workers.dev. Guarda esse endereço.
 
 A partir daí, cada vez que o Claude Code publica uma mudança, a Cloudflare atualiza o site sozinha.
 
@@ -161,9 +166,9 @@ O aviso não bloqueia nada, só manda um e-mail (no dia seguinte) se a conta pas
 
 Se quiser um endereço como `www.seunome.com.br`:
 
-1. No painel da Cloudflare, abra o seu projeto em **Workers & Pages**.
-2. Vá em **Custom domains** e clique em **Set up a custom domain**.
-3. Siga os passos da tela. Se o domínio foi comprado em outro lugar (Registro.br, por exemplo), a Cloudflare mostra o que precisa ser configurado lá.
+1. O domínio precisa estar na Cloudflare. No painel, clique em **Add a domain**, digite o domínio e escolha o plano **Free**. A Cloudflare mostra dois endereços de "nameserver": no lugar onde você comprou o domínio (Registro.br, por exemplo), troque os nameservers por esses dois. Pode levar algumas horas; a Cloudflare avisa por e-mail quando o domínio estiver ativo.
+2. Abra **Workers & Pages**, clique no seu projeto e vá em **Settings** > **Domains & Routes**.
+3. Clique em **Add** > **Custom Domain**, digite o endereço (ex.: `www.seunome.com.br`) e clique em **Add Custom Domain**.
 4. Depois, peça ao Claude Code:
    > Meu site agora tem o domínio https://www.seunome.com.br. Atualiza o endereço do site.
 
@@ -177,7 +182,10 @@ Se quiser um endereço como `www.seunome.com.br`:
 **A Cloudflare mostra "Failed" no deploy.** Peça ao Claude Code:
 > A Cloudflare deu erro ao publicar. Roda o build, descobre o problema e corrige.
 
-**A prévia do link no WhatsApp não mostra a foto.** O WhatsApp guarda a prévia antiga por um tempo. Teste mandando o link com `?v=2` no final (ex.: `https://seu-site.pages.dev/?v=2`).
+Se o erro disser que o nome não bate ("must match the name of your Worker"), peça:
+> O nome do meu projeto na Cloudflare é bia-ugc. Acerta o nome e publica de novo.
+
+**A prévia do link no WhatsApp não mostra a foto.** O WhatsApp guarda a prévia antiga por um tempo. Teste mandando o link com `?v=2` no final (ex.: `https://portfolio-ugc.bia.workers.dev/?v=2`). Se nunca mostrou, confira se o Claude Code guardou o endereço do seu site.
 
 **Um vídeo não aparece.** Peça:
 > O vídeo da marca X não aparece no site. Confere o que houve.

@@ -58,16 +58,8 @@ export const visual = visualDoTema(c.tema, c.cores);
 if (visual.problemas.length) throw new ProblemasNoConteudo(visual.problemas.map((p) => explicar(['cores', p.campo], p.mensagem)));
 export const { paleta, tema, fontes } = visual;
 
-/** Endereço público do site. Sem `endereco` no creator.ts, usa o da Cloudflare Pages. */
-export const endereco = (() => {
-  if (c.endereco) return c.endereco.replace(/\/+$/, '');
-  if (!process.env.CF_PAGES_URL) return '';
-  // A Cloudflare informa o endereço da versão (abc123.projeto.pages.dev); o site fica em projeto.pages.dev.
-  const url = new URL(process.env.CF_PAGES_URL);
-  const partes = url.hostname.split('.');
-  if (url.hostname.endsWith('.pages.dev') && partes.length === 4) url.hostname = partes.slice(1).join('.');
-  return url.origin;
-})();
+/** Endereço público do site (o Worker da Cloudflare não informa no build, então vem do creator.ts). */
+export const endereco = c.endereco.replace(/\/+$/, '');
 
 // Modo "local": vídeos e capas em public/videos (vão junto com o site).
 // Modo "r2": vídeos e capas no bucket do Cloudflare R2.
@@ -108,7 +100,7 @@ const arquivosDosVideos = todosOsVideos.flatMap((v) => [
   { nome: v.capa, oQue: `a capa do vídeo ${v.numero}` },
 ]);
 
-// A Cloudflare Pages não publica arquivo com mais de 25 MB. Usamos 24 MB para ter folga.
+// A Cloudflare não publica arquivo com mais de 25 MB. Usamos 24 MB para ter folga.
 const LIMITE_POR_ARQUIVO = 24 * 1024 * 1024;
 const emMegas = (bytes: number) => (bytes / 1024 / 1024).toFixed(1).replace('.', ',');
 
@@ -122,8 +114,8 @@ function conferirPastaPublic() {
     throw new ProblemasNoConteudo(
       grandes.map((caminho) =>
         caminho.endsWith('.mp4')
-          ? `Vídeos: "${caminho}" tem ${emMegas(statSync(caminho).size)} MB e passa do limite de 24 MB por arquivo da Cloudflare Pages. Rode "npm run comprimir" de novo (no modo local ele comprime para caber) ou corte o vídeo.`
-          : `Arquivos: "${caminho}" tem ${emMegas(statSync(caminho).size)} MB e passa do limite de 24 MB por arquivo da Cloudflare Pages. Diminua o arquivo ou coloque um link para ele.`,
+          ? `Vídeos: "${caminho}" tem ${emMegas(statSync(caminho).size)} MB e passa do limite de 24 MB por arquivo da Cloudflare. Rode "npm run comprimir" de novo (no modo local ele comprime para caber) ou corte o vídeo.`
+          : `Arquivos: "${caminho}" tem ${emMegas(statSync(caminho).size)} MB e passa do limite de 24 MB por arquivo da Cloudflare. Diminua o arquivo ou coloque um link para ele.`,
       ),
       'nos arquivos da pasta public',
     );

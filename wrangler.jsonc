@@ -1,5 +1,5 @@
-// Configuração para publicar como Worker na Cloudflare (Workers & Pages > Worker).
-// "name" precisa ser igual ao nome do projeto no painel. Numa Cloudflare Pages, este arquivo é ignorado.
+// Configuração para publicar como Worker na Cloudflare (Workers & Pages > Create application > Import a repository).
+// "name" precisa ser igual ao nome do projeto no painel, senão a publicação falha.
 {
   "name": "portfolio-ugc",
   "compatibility_date": "2026-10-01",

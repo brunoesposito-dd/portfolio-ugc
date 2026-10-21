@@ -105,7 +105,7 @@ export const esquema = z
     endereco: z
       .string()
       .trim()
-      .regex(/^(https:\/\/[^\s/]+\.[^\s/]+\/?)?$/, { error: 'o endereço do site precisa começar com https://, ex.: "https://meuportfolio.pages.dev"' })
+      .regex(/^(https:\/\/[^\s/]+\.[^\s/]+\/?)?$/, { error: 'o endereço do site precisa começar com https://, ex.: "https://portfolio-ugc.seunome.workers.dev"' })
       .default(''),
     modoDosVideos: z.enum(['local', 'r2'], { error: 'o modo dos vídeos precisa ser "local" ou "r2"' }).default('local'),
     urlDosVideos: z.string(erro('', 'a URL dos vídeos precisa estar entre aspas')).trim().default(''),
