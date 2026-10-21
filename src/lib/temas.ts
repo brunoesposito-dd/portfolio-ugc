@@ -40,7 +40,7 @@ export const TEMAS = {
   // Linho, marrom-oliva e verde-oliva. Natural e acolhedor: casa, bem-estar, comida, maternidade.
   terra: {
     fundo: '#F0EBE1', texto: '#2C2A1E', destaque: '#55653A', titulo: 'dmSerif', corpo: 'dmSans',
-    peso: 400, caixa: 'none', espacamento: '-0.01em', raio: '14px', escala: 0.95, letra: 0.6, topoNaCampanha: false,
+    peso: 400, caixa: 'none', espacamento: '-0.01em', raio: '14px', escala: 0.95, letra: 0.6, topoNaCampanha: true,
   },
 } as const satisfies Record<
   string,
